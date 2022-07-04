@@ -39,7 +39,7 @@
 version = "2.16.9"
 configVersion = 31
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-print("Importing Script Modules...")
+print("Importing Script Modules...") # fmt: skip
 # Import other module files
 from Scripts.shared_imports import *
 import Scripts.auth as auth
@@ -53,7 +53,7 @@ from Scripts.community_downloader import main as get_community_comments #Args = 
 import Scripts.community_downloader as community_downloader
 from Scripts.utils import choice
 
-print("Importing Standard Libraries...")
+print("Importing Standard Libraries...") # fmt: skip
 # Standard Libraries
 import time
 import ast
@@ -64,7 +64,7 @@ import platform
 import json
 from pkg_resources import parse_version
 
-print("Importing Third-Party Modules...")
+print("Importing Third-Party Modules...") # fmt: skip
 # Other Libraries
 from googleapiclient.errors import HttpError
 
@@ -85,8 +85,8 @@ def main():
 
   # Run check on python version, must be 3.6 or higher because of f strings
   if sys.version_info[0] < 3 or sys.version_info[1] < 6:
-    print("Error Code U-2: This program requires running python 3.6 or higher! You are running" + str(sys.version_info[0]) + "." + str(sys.version_info[1]))
-    input("Press Enter to exit...")
+    print("Error Code U-2: This program requires running python 3.6 or higher! You are running" + str(sys.version_info[0]) + "." + str(sys.version_info[1])) # fmt: skip
+    input("Press Enter to exit...") # fmt: skip
     sys.exit()
 
   # Declare Global Variables
@@ -105,7 +105,7 @@ def main():
   clear_command = "cls" if platform.system() == "Windows" else "clear"
   os.system(clear_command)
 
-  print("\nLoading YT Spammer Purge @ " + str(version) + "...")
+  print("\nLoading YT Spammer Purge @ " + str(version) + "...") # fmt: skip
 
   # Authenticate with the Google API - If token expired and invalid, deletes and re-authenticates
   YOUTUBE = auth.first_authentication()
@@ -133,29 +133,29 @@ def main():
     }
   }
 
-  print("Checking for updates to program and spam lists...")
+  print("Checking for updates to program and spam lists...") # fmt: skip
   # Check if resources and spam list folders exist, and create them
   if not os.path.isdir(resourceFolder):
     try:
       os.mkdir(resourceFolder)
       # Create readme
       with open(os.path.join(resourceFolder, "_What_Is_This_Folder.txt"), "w") as f:
-        f.write("# This Resources folder is used to store resources required for the YT Spammer Purge program.\n")
-        f.write("# Note: If you had a previous spam_lists folder that was created in the same folder as \n")
-        f.write("# the .exe file, you can delete that old spam_lists folder. The resources folder is the \n")
-        f.write("# new location they will be stored.\n")
+        f.write("# This Resources folder is used to store resources required for the YT Spammer Purge program.\n") # fmt: skip
+        f.write("# Note: If you had a previous spam_lists folder that was created in the same folder as \n") # fmt: skip
+        f.write("# the .exe file, you can delete that old spam_lists folder. The resources folder is the \n") # fmt: skip
+        f.write("# new location they will be stored.\n") # fmt: skip
                 
     except:
-      print("\nError: Could not create folder. To update the spam lists, try creating a folder called 'SpamPurge_Resources',")
-      print("       then inside that, create another folder called 'Spam_Lists'.")
-      input("Press Enter to continue...")
+      print("\nError: Could not create folder. To update the spam lists, try creating a folder called 'SpamPurge_Resources',") # fmt: skip
+      print("       then inside that, create another folder called 'Spam_Lists'.") # fmt: skip
+      input("Press Enter to continue...") # fmt: skip
 
   if os.path.isdir(resourceFolder) and not os.path.isdir(spamListFolder):
     try:
       os.mkdir(spamListFolder)
     except:
-      print("\nError: Could not create folder. To update the spam lists, go into the 'SpamPurge_Resources' folder,")
-      print("       then inside that, create another folder called 'Spam_Lists'.")
+      print("\nError: Could not create folder. To update the spam lists, go into the 'SpamPurge_Resources' folder,") # fmt: skip
+      print("       then inside that, create another folder called 'Spam_Lists'.") # fmt: skip
 
   # Prepare to check and ingest spammer list files
   # Iterate and get paths of each list
@@ -208,21 +208,21 @@ def main():
     elif config['release_channel'] == "stable":
       updateReleaseChannel = "stable"
     else:
-      print("Invalid value for 'release_channel' in config file. Must be 'All' or 'Stable'")
-      print("Defaulting to 'All'")
-      input("Press Enter to continue...")
+      print("Invalid value for 'release_channel' in config file. Must be 'All' or 'Stable'") # fmt: skip
+      print("Defaulting to 'All'") # fmt: skip
+      input("Press Enter to continue...") # fmt: skip
       updateReleaseChannel = "all"
   except KeyError:
-    print("\nYour version of the config file does not specify a release channel. Defaulting to 'All'")
-    print(f"{F.YELLOW}Re-create your config{S.R} to get the latest version.")
-    input("\nPress Enter to continue...")
+    print("\nYour version of the config file does not specify a release channel. Defaulting to 'All'") # fmt: skip
+    print(f"{F.YELLOW}Re-create your config{S.R} to get the latest version.") # fmt: skip
+    input("\nPress Enter to continue...") # fmt: skip
     updateReleaseChannel = "all"
 
   if config['auto_check_update'] == True:
     try:
       updateAvailable = files.check_for_update(version, updateReleaseChannel, silentCheck=True, )
     except Exception as e:
-      print(f"{F.LIGHTRED_EX}Error Code U-3 occurred while checking for updates. (Checking can be disabled using the config file setting) Continuing...{S.R}\n")      
+      print(f"{F.LIGHTRED_EX}Error Code U-3 occurred while checking for updates. (Checking can be disabled using the config file setting) Continuing...{S.R}\n")       # fmt: skip
       updateAvailable = None
     
     # Check if today or tomorrow's date is later than the last update date (add day to account for time zones)
@@ -239,7 +239,7 @@ def main():
     spamList['FilterContents'] = files.ingest_list_file(spamList['Path'], keepCase=False)
   
   ####### Load Other Data into MiscData #######
-  print("\nLoading other assets..\n")
+  print("\nLoading other assets..\n") # fmt: skip
   @dataclass
   class MiscDataStore:
     resources:dict
@@ -268,10 +268,10 @@ def main():
   # Create Whitelist if it doesn't exist, 
   if not os.path.exists(whitelistPathWithName):
     with open(whitelistPathWithName, "a") as f:
-      f.write("# Commenters whose channel IDs are in this list will always be ignored. You can add or remove IDs (one per line) from this list as you wish.\n")
-      f.write("# Channel IDs for a channel can be found in the URL after clicking a channel's name while on the watch page or where they've left a comment.\n")
-      f.write("# - Channels that were 'excluded' will also appear in this list.\n")
-      f.write("# - Lines beginning with a '#' are comments and aren't read by the program. (But do not put a '#' on the same line as actual data)\n\n")
+      f.write("# Commenters whose channel IDs are in this list will always be ignored. You can add or remove IDs (one per line) from this list as you wish.\n") # fmt: skip
+      f.write("# Channel IDs for a channel can be found in the URL after clicking a channel's name while on the watch page or where they've left a comment.\n") # fmt: skip
+      f.write("# - Channels that were 'excluded' will also appear in this list.\n") # fmt: skip
+      f.write("# - Lines beginning with a '#' are comments and aren't read by the program. (But do not put a '#' on the same line as actual data)\n\n") # fmt: skip
     miscData.resources['Whitelist']['WhitelistContents'] = []
   else:
     miscData.resources['Whitelist']['WhitelistContents'] = files.ingest_list_file(whitelistPathWithName, keepCase=True)
@@ -286,15 +286,15 @@ def main():
 
 
   #----------------------------------- Begin Showing Program ---------------------------------
-  print(f"{F.LIGHTYELLOW_EX}\n===================== YOUTUBE SPAMMER PURGE v" + version + f" ====================={S.R}")
-  print("=========== https://github.com/ThioJoe/YT-Spammer-Purge ===========")
-  print("================= Author: ThioJoe - YouTube.com/ThioJoe ================ \n")
+  print(f"{F.LIGHTYELLOW_EX}\n===================== YOUTUBE SPAMMER PURGE v" + version + f" ====================={S.R}") # fmt: skip
+  print("=========== https://github.com/ThioJoe/YT-Spammer-Purge ===========") # fmt: skip
+  print("================= Author: ThioJoe - YouTube.com/ThioJoe ================ \n") # fmt: skip
 
   # Instructions
-  print("Purpose: Lets you scan for spam comments and mass-delete them all at once \n")
-  print("NOTE: It's probably better to scan individual videos, because you can scan all those comments,")
-  print("      but scanning your entire channel must be limited and might miss older spam comments.")
-  print("You will be shown the comments to confirm before they are deleted.")
+  print("Purpose: Lets you scan for spam comments and mass-delete them all at once \n") # fmt: skip
+  print("NOTE: It's probably better to scan individual videos, because you can scan all those comments,") # fmt: skip
+  print("      but scanning your entire channel must be limited and might miss older spam comments.") # fmt: skip
+  print("You will be shown the comments to confirm before they are deleted.") # fmt: skip
 
   # While loop until user confirms they are logged into the correct account
   confirmedCorrectLogin = False
@@ -303,7 +303,7 @@ def main():
     userInfo = auth.get_current_user(config)
     CURRENTUSER = User(id=userInfo[0], name=userInfo[1], configMatch=userInfo[2]) # Returns [channelID, channelTitle, configmatch]
     auth.CURRENTUSER = CURRENTUSER
-    print("\n    >  Currently logged in user: " + f"{F.LIGHTGREEN_EX}" + str(CURRENTUSER.name) + f"{S.R} (Channel ID: {F.LIGHTGREEN_EX}" + str(CURRENTUSER.id) + f"{S.R} )")
+    print("\n    >  Currently logged in user: " + f"{F.LIGHTGREEN_EX}" + str(CURRENTUSER.name) + f"{S.R} (Channel ID: {F.LIGHTGREEN_EX}" + str(CURRENTUSER.id) + f"{S.R} )") # fmt: skip
     if choice("       Continue as this user?", CURRENTUSER.configMatch) == True:
       confirmedCorrectLogin = True
       os.system(clear_command)
@@ -386,7 +386,7 @@ def main():
           updateString = f"{B.LIGHTCYAN_EX}{F.BLACK} Beta {S.R}"
       elif updateAvailable == None:
         updateString = f"{F.LIGHTRED_EX}Error{S.R}"
-        print("> Note: Error during check for updates. Select 'Check For Updates' for details.")  
+        print("> Note: Error during check for updates. Select 'Check For Updates' for details.")   # fmt: skip
 
     else:
       if config['auto_check_update'] == False:
@@ -397,20 +397,20 @@ def main():
         updateString = ""
 
     # User selects scanning mode,  while Loop to get scanning mode, so if invalid input, it will keep asking until valid input
-    print("\n{:<59}{:<18}{:>7}".format("> At any prompt, enter 'X' to return here", updateStringLabel, updateString))
-    print("> Enter 'Q' now to quit")
+    print("\n{:<59}{:<18}{:>7}".format("> At any prompt, enter 'X' to return here", updateStringLabel, updateString)) # fmt: skip
+    print("> Enter 'Q' now to quit") # fmt: skip
 
-    print(f"\n\n-------------------------------- {F.YELLOW}Scanning Options{S.R} --------------------------------")
-    print(f"      1. Scan {F.LIGHTCYAN_EX}specific videos{S.R}")
-    print(f"      2. Scan {F.LIGHTCYAN_EX}recent videos{S.R} for a channel")
-    print(f"      3. Scan recent comments across your {F.LIGHTBLUE_EX}Entire Channel{S.R}")
-    print(f"      4. Scan a specific {F.LIGHTMAGENTA_EX}community post{S.R} (Experimental)")
-    print(f"      5. Scan {F.LIGHTMAGENTA_EX}recent community posts{S.R} for a channel (Experimental)")
-    print(f"\n--------------------------------- {F.YELLOW}Other Options{S.R} ----------------------------------")
-    print(f"      6. Create your own {F.LIGHTGREEN_EX}config file(s){S.R} to run the program with pre-set settings")
-    print(f"      7. Remove comments using a {F.LIGHTRED_EX}pre-existing list{S.R} or log file")
-    print(f"      8. Recover deleted comments using log file")
-    print(f"      9. Check & Download {F.LIGHTCYAN_EX}Updates{S.R}\n")
+    print(f"\n\n-------------------------------- {F.YELLOW}Scanning Options{S.R} --------------------------------") # fmt: skip
+    print(f"      1. Scan {F.LIGHTCYAN_EX}specific videos{S.R}") # fmt: skip
+    print(f"      2. Scan {F.LIGHTCYAN_EX}recent videos{S.R} for a channel") # fmt: skip
+    print(f"      3. Scan recent comments across your {F.LIGHTBLUE_EX}Entire Channel{S.R}") # fmt: skip
+    print(f"      4. Scan a specific {F.LIGHTMAGENTA_EX}community post{S.R} (Experimental)") # fmt: skip
+    print(f"      5. Scan {F.LIGHTMAGENTA_EX}recent community posts{S.R} for a channel (Experimental)") # fmt: skip
+    print(f"\n--------------------------------- {F.YELLOW}Other Options{S.R} ----------------------------------") # fmt: skip
+    print(f"      6. Create your own {F.LIGHTGREEN_EX}config file(s){S.R} to run the program with pre-set settings") # fmt: skip
+    print(f"      7. Remove comments using a {F.LIGHTRED_EX}pre-existing list{S.R} or log file") # fmt: skip
+    print(f"      8. Recover deleted comments using log file") # fmt: skip
+    print(f"      9. Check & Download {F.LIGHTCYAN_EX}Updates{S.R}\n") # fmt: skip
     
 
 
@@ -421,7 +421,7 @@ def main():
       if validConfigSetting == True and config and config['scan_mode'] != 'ask':
         scanMode = config['scan_mode']
       else:
-        scanMode = input("Choice (1-9): ")
+        scanMode = input("Choice (1-9): ") # fmt: skip
       if scanMode.lower() == "q":
         sys.exit()
 
@@ -448,7 +448,7 @@ def main():
         elif scanMode == "9":
           scanMode = "checkUpdates"
       else:
-        print(f"\nInvalid choice: {scanMode} - Enter a number from 1 to 9")
+        print(f"\nInvalid choice: {scanMode} - Enter a number from 1 to 9") # fmt: skip
         validConfigSetting = False
 
 # ================================================================================= CHOSEN VIDEOS ======================================================================================================
@@ -472,19 +472,19 @@ def main():
             if len(enteredVideosList) == 0:
               validConfigSetting = False
               listNotEmpty = False
-              print(f"{F.LIGHTRED_EX}\nError: Video list is empty!{S.R}")
+              print(f"{F.LIGHTRED_EX}\nError: Video list is empty!{S.R}") # fmt: skip
             else:
               listNotEmpty = True
           else:
-            print(f"\nEnter a list of {F.YELLOW}Video Links{S.R} or {F.YELLOW}Video IDs{S.R} to scan, separated by commas.")
-            print(" > Note: All videos must be from the same channel.")
-            enteredVideosList = utils.string_to_list(input("\nEnter here: "))
+            print(f"\nEnter a list of {F.YELLOW}Video Links{S.R} or {F.YELLOW}Video IDs{S.R} to scan, separated by commas.") # fmt: skip
+            print(" > Note: All videos must be from the same channel.") # fmt: skip
+            enteredVideosList = utils.string_to_list(input("\nEnter here: ")) # fmt: skip
             if str(enteredVideosList).lower() == "['x']":
               return True # Return to main menu
             validConfigSetting = False
             if len(enteredVideosList) == 0:
               listNotEmpty = False
-              print(f"{F.LIGHTRED_EX}\nError: Video list is empty!{S.R}")
+              print(f"{F.LIGHTRED_EX}\nError: Video list is empty!{S.R}") # fmt: skip
             else:
               listNotEmpty = True
 
@@ -512,7 +512,7 @@ def main():
             if str(videoListResult[i][1]) not in current.vidTitleDict:
               current.vidTitleDict[videoListResult[i][1]] = str(videoListResult[i][2])
           else:
-            print(f"\nInvalid Video: {enteredVideosList[i]}  |  Video ID = {videoListResult[1]}")
+            print(f"\nInvalid Video: {enteredVideosList[i]}  |  Video ID = {videoListResult[1]}") # fmt: skip
             validConfigSetting = False
             break
           
@@ -522,8 +522,8 @@ def main():
           if videosToScan[0]['channelOwnerID'] != videosToScan[i]['channelOwnerID']:
             misMatchVidIndex += 1
             if allVideosMatchBool == True:
-              print(f"\n {F.LIGHTRED_EX}ERROR: Videos scanned together all must be from the same channel.{S.R}")
-              print("  The following videos do not match the channel owner of the first video in the list: ")
+              print(f"\n {F.LIGHTRED_EX}ERROR: Videos scanned together all must be from the same channel.{S.R}") # fmt: skip
+              print("  The following videos do not match the channel owner of the first video in the list: ") # fmt: skip
             if misMatchVidIndex == 11 and len(enteredVideosList) > 10:
               remainingCount = str(len(enteredVideosList) - 10)
               userChoice = choice(f"There are {remainingCount} more mis-matched videos, do you want to see the rest?")
@@ -531,7 +531,7 @@ def main():
                 break
               elif userChoice == None:
                 return True # Return to main menu
-            print(f"  {misMatchVidIndex}. {str(videosToScan[i]['videoTitle'])}")
+            print(f"  {misMatchVidIndex}. {str(videosToScan[i]['videoTitle'])}") # fmt: skip
             validConfigSetting = False
             allVideosMatchBool = False
 
@@ -539,7 +539,7 @@ def main():
         if allVideosMatchBool == True:       
           # Print video titles, if there are many, ask user to see all if more than 5
           i = 0
-          print(f"\n{F.BLUE}Chosen Videos:{S.R}")
+          print(f"\n{F.BLUE}Chosen Videos:{S.R}") # fmt: skip
           for video in videosToScan:
             i += 1
             if i==6 and len(enteredVideosList) > 5:
@@ -550,8 +550,8 @@ def main():
                   break
                 elif userChoice == None:
                   return True # Return to main menu
-            print(f" {i}. {video['videoTitle']}")
-          print("")
+            print(f" {i}. {video['videoTitle']}") # fmt: skip
+          print("") # fmt: skip
           
           if CURRENTUSER.id != videosToScan[0]['channelOwnerID']:
             userNotChannelOwner = True
@@ -564,16 +564,16 @@ def main():
             confirm = True
           else:
             if userNotChannelOwner == True and moderator_mode == False:
-              print(f"{F.LIGHTRED_EX}NOTE: This is not your video. Enabling '{F.YELLOW}Not Your Channel Mode{F.LIGHTRED_EX}'. You can report spam comments, but not delete them.{S.R}")
+              print(f"{F.LIGHTRED_EX}NOTE: This is not your video. Enabling '{F.YELLOW}Not Your Channel Mode{F.LIGHTRED_EX}'. You can report spam comments, but not delete them.{S.R}") # fmt: skip
             elif userNotChannelOwner == True and moderator_mode == True:
-              print(f"{F.LIGHTRED_EX}NOTE: {F.YELLOW}Moderator Mode is enabled{F.LIGHTRED_EX}. You can hold comments for review when using certain modes{S.R}")
-            print("Total number of comments to scan: " + str(miscData.totalCommentCount))
+              print(f"{F.LIGHTRED_EX}NOTE: {F.YELLOW}Moderator Mode is enabled{F.LIGHTRED_EX}. You can hold comments for review when using certain modes{S.R}") # fmt: skip
+            print("Total number of comments to scan: " + str(miscData.totalCommentCount)) # fmt: skip
             if miscData.totalCommentCount >= 100000:
-              print(f"\n{B.YELLOW}{F.BLACK} WARNING: {S.R} You have chosen to scan a large amount of comments. The default API quota limit ends up")
-              print(f" around {F.YELLOW}10,000 comment deletions per day{S.R}. If you find more spam than that you will go over the limit.")
-              print(f"        > Read more about the quota limits for this app here: {F.YELLOW}TJoe.io/api-limit-info{S.R}")
+              print(f"\n{B.YELLOW}{F.BLACK} WARNING: {S.R} You have chosen to scan a large amount of comments. The default API quota limit ends up") # fmt: skip
+              print(f" around {F.YELLOW}10,000 comment deletions per day{S.R}. If you find more spam than that you will go over the limit.") # fmt: skip
+              print(f"        > Read more about the quota limits for this app here: {F.YELLOW}TJoe.io/api-limit-info{S.R}") # fmt: skip
               if userNotChannelOwner == False or moderator_mode == True:
-                print(f"{F.LIGHTCYAN_EX}> Note:{S.R} You may want to disable 'check_deletion_success' in the config, as this doubles the API cost! (So a 5K limit)")
+                print(f"{F.LIGHTCYAN_EX}> Note:{S.R} You may want to disable 'check_deletion_success' in the config, as this doubles the API cost! (So a 5K limit)") # fmt: skip
             confirm = choice("Is this video list correct?", bypass=validConfigSetting)
             if confirm == None:
               return True # Return to main menu
@@ -598,11 +598,11 @@ def main():
             if validChannel == True:
               break
             else:
-              print("Invalid Channel ID or Link in config file!")
+              print("Invalid Channel ID or Link in config file!") # fmt: skip
 
-        print(f"\nEnter a {F.YELLOW}channel ID or Link{S.R} to scan {F.LIGHTCYAN_EX}recent videos{S.R} from")
-        print(f"   > If scanning {F.YELLOW}your own channel{S.R}, just hit {F.LIGHTGREEN_EX}Enter{S.R}")
-        inputtedChannel = input("\nEnter Here: ")
+        print(f"\nEnter a {F.YELLOW}channel ID or Link{S.R} to scan {F.LIGHTCYAN_EX}recent videos{S.R} from") # fmt: skip
+        print(f"   > If scanning {F.YELLOW}your own channel{S.R}, just hit {F.LIGHTGREEN_EX}Enter{S.R}") # fmt: skip
+        inputtedChannel = input("\nEnter Here: ") # fmt: skip
         if inputtedChannel == "":
           channelID = CURRENTUSER.id
           channelTitle = CURRENTUSER.name
@@ -615,7 +615,7 @@ def main():
       if CURRENTUSER.id != channelID:
         userNotChannelOwner = True
 
-      print(f"\nChosen Channel: {F.LIGHTCYAN_EX}{channelTitle}{S.R}")
+      print(f"\nChosen Channel: {F.LIGHTCYAN_EX}{channelTitle}{S.R}") # fmt: skip
       
       # Get number of recent videos to scan, either from config or user input, and validate
       while validEntry == False or confirm == False:
@@ -627,12 +627,12 @@ def main():
             numVideos = int(numVideos)
           except:
             validConfigSetting = False
-            print("Invalid number entered in config file for recent_videos_amount")
+            print("Invalid number entered in config file for recent_videos_amount") # fmt: skip
             numVideos = None
         else:
-          print(f"\nEnter the {F.YELLOW}number most recent videos{S.R} to scan back-to-back:")
-          numVideos = input("\nNumber of Recent Videos: ")
-          print("")
+          print(f"\nEnter the {F.YELLOW}number most recent videos{S.R} to scan back-to-back:") # fmt: skip
+          numVideos = input("\nNumber of Recent Videos: ") # fmt: skip
+          print("") # fmt: skip
           if str(numVideos).lower() == "x":
             return True # Return to main menu
         try:
@@ -641,16 +641,16 @@ def main():
             validEntry = True
             validConfigSetting = True
           else:
-            print("Error: Entry must be from 1 to 5000 (the YouTube API Limit)")
+            print("Error: Entry must be from 1 to 5000 (the YouTube API Limit)") # fmt: skip
             validEntry = False
             validConfigSetting = False
         except ValueError:
-          print(f"{F.LIGHTRED_EX}Error:{S.R} Entry must be a whole number greater than zero.")
+          print(f"{F.LIGHTRED_EX}Error:{S.R} Entry must be a whole number greater than zero.") # fmt: skip
         
         if validEntry == True and numVideos >= 1000:
-          print(f"\n{B.YELLOW}{F.BLACK} WARNING: {S.R} You have chosen to scan a large amount of videos. With the default API quota limit,")
-          print(f" every 1000 videos will use up 20% of the quota {F.YELLOW}just from listing the videos alone, before any comment scanning.{S.R}")
-          print(f"        > Read more about the quota limits for this app here: {F.YELLOW}TJoe.io/api-limit-info{S.R}")
+          print(f"\n{B.YELLOW}{F.BLACK} WARNING: {S.R} You have chosen to scan a large amount of videos. With the default API quota limit,") # fmt: skip
+          print(f" every 1000 videos will use up 20% of the quota {F.YELLOW}just from listing the videos alone, before any comment scanning.{S.R}") # fmt: skip
+          print(f"        > Read more about the quota limits for this app here: {F.YELLOW}TJoe.io/api-limit-info{S.R}") # fmt: skip
 
         if validEntry == True:
           # Fetch recent videos and print titles to user for confirmation
@@ -658,13 +658,13 @@ def main():
           if str(videosToScan) == "MainMenu":
             return True # Return to main menu
           if len(videosToScan) == 0:
-            print(f"\n{F.LIGHTRED_EX}Error:{S.R} No scannable videos found in selected range!  They all may have no comments and/or are live streams.")
+            print(f"\n{F.LIGHTRED_EX}Error:{S.R} No scannable videos found in selected range!  They all may have no comments and/or are live streams.") # fmt: skip
             if config['auto_close'] == True:
-              print("Auto-close enabled in config. Exiting in 5 seconds...")
+              print("Auto-close enabled in config. Exiting in 5 seconds...") # fmt: skip
               time.sleep(5)
               sys.exit()
             else:
-              input("\nPress Enter to return to main menu...")
+              input("\nPress Enter to return to main menu...") # fmt: skip
               return True
 
           # Get total comment count
@@ -673,8 +673,8 @@ def main():
             miscData.totalCommentCount += int(video['commentCount'])
 
           if len(videosToScan) < numVideos:
-            print(f"\n{F.YELLOW} WARNING:{S.R} Only {len(videosToScan)} videos found. Videos may be skipped if there are no comments.")
-          print("\nRecent Videos To Be Scanned:")
+            print(f"\n{F.YELLOW} WARNING:{S.R} Only {len(videosToScan)} videos found. Videos may be skipped if there are no comments.") # fmt: skip
+          print("\nRecent Videos To Be Scanned:") # fmt: skip
           for i in range(len(videosToScan)):
             if config['skip_confirm_video'] == False:
               if i == 10 and len(videosToScan) > 11:
@@ -684,22 +684,22 @@ def main():
                   break 
                 elif userChoice == None:
                   return True # Return to main menu         
-            print(f"  {i+1}. {videosToScan[i]['videoTitle']}")
+            print(f"  {i+1}. {videosToScan[i]['videoTitle']}") # fmt: skip
 
           if config['skip_confirm_video'] == True and validConfigSetting == True:
             confirm = True
           else:
             if userNotChannelOwner == True and moderator_mode == False:
-              print(f"{F.LIGHTRED_EX}NOTE: These aren't your videos. Enabling '{F.YELLOW}Not Your Channel Mode{F.LIGHTRED_EX}'. You can report spam comments, but not delete them.{S.R}")
+              print(f"{F.LIGHTRED_EX}NOTE: These aren't your videos. Enabling '{F.YELLOW}Not Your Channel Mode{F.LIGHTRED_EX}'. You can report spam comments, but not delete them.{S.R}") # fmt: skip
             elif userNotChannelOwner == True and moderator_mode == True:
-              print(f"{F.LIGHTRED_EX}NOTE: {F.YELLOW}Moderator Mode is enabled{F.LIGHTRED_EX}. You can hold comments for review when using certain modes{S.R}")
-            print("\nTotal number of comments to scan: " + str(miscData.totalCommentCount))
+              print(f"{F.LIGHTRED_EX}NOTE: {F.YELLOW}Moderator Mode is enabled{F.LIGHTRED_EX}. You can hold comments for review when using certain modes{S.R}") # fmt: skip
+            print("\nTotal number of comments to scan: " + str(miscData.totalCommentCount)) # fmt: skip
             if miscData.totalCommentCount >= 100000:
-              print(f"\n{B.YELLOW}{F.BLACK} WARNING: {S.R} You have chosen to scan a large amount of comments. The default API quota limit ends up")
-              print(f" around {F.YELLOW}10,000 comment deletions per day{S.R}. If you find more spam than that you will go over the limit.")
-              print(f"        > Read more about the quota limits for this app here: {F.YELLOW}TJoe.io/api-limit-info{S.R}")
+              print(f"\n{B.YELLOW}{F.BLACK} WARNING: {S.R} You have chosen to scan a large amount of comments. The default API quota limit ends up") # fmt: skip
+              print(f" around {F.YELLOW}10,000 comment deletions per day{S.R}. If you find more spam than that you will go over the limit.") # fmt: skip
+              print(f"        > Read more about the quota limits for this app here: {F.YELLOW}TJoe.io/api-limit-info{S.R}") # fmt: skip
               if userNotChannelOwner == True or moderator_mode == True:
-                print(f"{F.LIGHTCYAN_EX}> Note:{S.R} You may want to disable 'check_deletion_success' in the config, as this doubles the API cost! (So a 5K limit)")
+                print(f"{F.LIGHTCYAN_EX}> Note:{S.R} You may want to disable 'check_deletion_success' in the config, as this doubles the API cost! (So a 5K limit)") # fmt: skip
             confirm = choice("Is everything correct?", bypass=config['skip_confirm_video'])
             if confirm == None:
               return True # Return to main menu
@@ -720,17 +720,17 @@ def main():
           if validConfigSetting == True and config and config['max_comments'] != 'ask':
             maxScanNumber = int(config['max_comments'])
           else:
-            maxScanNumber = input(f"Enter the maximum {F.YELLOW}number of comments{S.R} to scan: ")
+            maxScanNumber = input(f"Enter the maximum {F.YELLOW}number of comments{S.R} to scan: ") # fmt: skip
             if str(maxScanNumber).lower() == "x":
               return True # Return to main menu
             maxScanNumber = int(maxScanNumber)
 
             if maxScanNumber >= 100000:
-              print(f"\n{B.YELLOW}{F.BLACK} WARNING: {S.R} You have chosen to scan a large amount of comments. The default API quota limit ends up")
-              print(f" around {F.YELLOW}10,000 comment deletions per day{S.R}. If you find more spam than that you will go over the limit.")
-              print(f"        > Read more about the quota limits for this app here: {F.YELLOW}TJoe.io/api-limit-info{S.R}")
+              print(f"\n{B.YELLOW}{F.BLACK} WARNING: {S.R} You have chosen to scan a large amount of comments. The default API quota limit ends up") # fmt: skip
+              print(f" around {F.YELLOW}10,000 comment deletions per day{S.R}. If you find more spam than that you will go over the limit.") # fmt: skip
+              print(f"        > Read more about the quota limits for this app here: {F.YELLOW}TJoe.io/api-limit-info{S.R}") # fmt: skip
               if userNotChannelOwner == True or moderator_mode == True:
-                print(f"{F.LIGHTCYAN_EX}> Note:{S.R} You may want to disable 'check_deletion_success' in the config, as this doubles the API cost! (So a 5K limit)")
+                print(f"{F.LIGHTCYAN_EX}> Note:{S.R} You may want to disable 'check_deletion_success' in the config, as this doubles the API cost! (So a 5K limit)") # fmt: skip
               userChoice = choice("Do you still want to continue?")
               if userChoice == False:
                 validInteger == False
@@ -740,10 +740,10 @@ def main():
           if maxScanNumber > 0:
             validInteger = True # If it gets here, it's an integer, otherwise goes to exception
           else:
-            print("\nInvalid Input! Number must be greater than zero.")
+            print("\nInvalid Input! Number must be greater than zero.") # fmt: skip
             validConfigSetting = False
         except:
-          print("\nInvalid Input! - Must be a whole number.")
+          print("\nInvalid Input! - Must be a whole number.") # fmt: skip
           validConfigSetting = False
 
       miscData.channelOwnerID = CURRENTUSER.id
@@ -752,25 +752,25 @@ def main():
 # ================================================================================ COMMUNITY POST =====================================================================================================
 
     elif scanMode == 'communityPost':
-      print(f"\nNOTES: This mode is {F.YELLOW}experimental{S.R}, and not as polished as other features. Expect some janky-ness.")
-      print("   > It is also much slower to retrieve comments, because it does not use the API")
+      print(f"\nNOTES: This mode is {F.YELLOW}experimental{S.R}, and not as polished as other features. Expect some janky-ness.") # fmt: skip
+      print("   > It is also much slower to retrieve comments, because it does not use the API") # fmt: skip
       confirm = False
       while confirm == False:
-        communityPostInput = input("\nEnter the ID or link of the community post: ")
+        communityPostInput = input("\nEnter the ID or link of the community post: ") # fmt: skip
         if str(communityPostInput).lower() == "x":
           return True # Return to main menu
         # Validate post ID or link, get additional info about owner, and useable link
         isValid, communityPostID, postURL, postOwnerID, postOwnerUsername = validation.validate_post_id(communityPostInput)
         if isValid == True:
-          print("\nCommunity Post By: " + postOwnerUsername)
+          print("\nCommunity Post By: " + postOwnerUsername) # fmt: skip
           if postOwnerID != CURRENTUSER.id:
             userNotChannelOwner = True
-            print(f"\n{F.YELLOW}Warning:{S.R} You are scanning someone elses post. '{F.LIGHTRED_EX}Not Your Channel Mode{S.R}' Enabled.")
+            print(f"\n{F.YELLOW}Warning:{S.R} You are scanning someone elses post. '{F.LIGHTRED_EX}Not Your Channel Mode{S.R}' Enabled.") # fmt: skip
           confirm = choice("Continue?")
           if confirm == None:
             return True # Return to main menu
         else:
-          print("Problem interpreting the post information, please check the link or ID.")
+          print("Problem interpreting the post information, please check the link or ID.") # fmt: skip
       miscData.channelOwnerID = postOwnerID
       miscData.channelOwnerName = postOwnerUsername 
 
@@ -787,9 +787,9 @@ def main():
           pass
 
         if validInteger == False:
-          print("\nInvalid max_comments setting in config! Number must a whole number be greater than zero.")
+          print("\nInvalid max_comments setting in config! Number must a whole number be greater than zero.") # fmt: skip
         while validInteger == False:
-          maxScanInput = input(f"\nEnter the maximum {F.YELLOW}number of comments{S.R} to scan: ")
+          maxScanInput = input(f"\nEnter the maximum {F.YELLOW}number of comments{S.R} to scan: ") # fmt: skip
           if str(maxScanInput).lower() == "x":
             return True # Return to main menu
           try:
@@ -797,16 +797,16 @@ def main():
             if maxScanNumber > 0:
               validInteger = True # If it gets here, it's an integer, otherwise goes to exception
             else:
-              print("\nInvalid Input! Number must a whole number be greater than zero.")
+              print("\nInvalid Input! Number must a whole number be greater than zero.") # fmt: skip
           except:
-            print("\nInvalid Input! - Must be a whole number greater than zero.")
+            print("\nInvalid Input! - Must be a whole number greater than zero.") # fmt: skip
 
 # ==================================================================== RECENT COMMUNITY POSTS =============================================================================================================
 
     # Recent Community Posts
     elif scanMode == 'recentCommunityPosts':
-      print(f"\nNOTES: This mode is {F.YELLOW}experimental{S.R}, and not as polished as other features. Expect some janky-ness.")
-      print("   > It is also much slower to retrieve comments, because it does not use the API")
+      print(f"\nNOTES: This mode is {F.YELLOW}experimental{S.R}, and not as polished as other features. Expect some janky-ness.") # fmt: skip
+      print("   > It is also much slower to retrieve comments, because it does not use the API") # fmt: skip
         
       confirm = False
       validEntry = False
@@ -825,11 +825,11 @@ def main():
             if validChannel == True:
               break
             else:
-              print("Invalid Channel ID or Link in config file!")
+              print("Invalid Channel ID or Link in config file!") # fmt: skip
 
-        print(f"\nEnter a {F.YELLOW}channel ID or Link{S.R} to scan {F.LIGHTCYAN_EX}recent community posts{S.R} from")
-        print(f"   > If scanning {F.YELLOW}your own channel{S.R}, just hit {F.LIGHTGREEN_EX}Enter{S.R}")
-        inputtedChannel = input("\nEnter Here: ")
+        print(f"\nEnter a {F.YELLOW}channel ID or Link{S.R} to scan {F.LIGHTCYAN_EX}recent community posts{S.R} from") # fmt: skip
+        print(f"   > If scanning {F.YELLOW}your own channel{S.R}, just hit {F.LIGHTGREEN_EX}Enter{S.R}") # fmt: skip
+        inputtedChannel = input("\nEnter Here: ") # fmt: skip
         if inputtedChannel == "":
           channelID = CURRENTUSER.id
           channelTitle = CURRENTUSER.name
@@ -845,39 +845,39 @@ def main():
       # Get and print community posts
       recentPostsListofDicts = community_downloader.fetch_recent_community_posts(channelID)
       
-      print("\n------------------------------------------------------------")
-      print(f"Retrieved {F.YELLOW}{len(recentPostsListofDicts)} recent posts{S.R} from {F.LIGHTCYAN_EX}{channelTitle}{S.R}")
-      print(f"\n  Post Content Samples:")
+      print("\n------------------------------------------------------------") # fmt: skip
+      print(f"Retrieved {F.YELLOW}{len(recentPostsListofDicts)} recent posts{S.R} from {F.LIGHTCYAN_EX}{channelTitle}{S.R}") # fmt: skip
+      print(f"\n  Post Content Samples:") # fmt: skip
       for i in range(len(recentPostsListofDicts)):
         # recentPostsListofDicts = {post id : post text} - Below prints sample of post text
-        print(f"    {i+1}.".ljust(9, " ") + f"{list(recentPostsListofDicts[i].values())[0][0:50]}")
+        print(f"    {i+1}.".ljust(9, " ") + f"{list(recentPostsListofDicts[i].values())[0][0:50]}") # fmt: skip
 
       if userNotChannelOwner == True:
-              print(f"\n > {F.LIGHTRED_EX}Warning:{S.R} You are scanning someone elses post. {F.LIGHTRED_EX}'Not Your Channel Mode'{S.R} Enabled.")
+              print(f"\n > {F.LIGHTRED_EX}Warning:{S.R} You are scanning someone elses post. {F.LIGHTRED_EX}'Not Your Channel Mode'{S.R} Enabled.") # fmt: skip
 
-      print(f"\n{F.YELLOW}How many{S.R} of the most recent posts do you want to scan?")
+      print(f"\n{F.YELLOW}How many{S.R} of the most recent posts do you want to scan?") # fmt: skip
 
       inputStr = ""
       while True:
         if config['recent_videos_amount'] != 'ask' and inputStr == "":
           inputStr = config['recent_videos_amount']
         else:
-          inputStr = input("\nNumber of Recent Posts: ")
+          inputStr = input("\nNumber of Recent Posts: ") # fmt: skip
           if str(inputStr).lower() == "x":
             return True
 
         try:
           numRecentPosts = int(inputStr)
           if numRecentPosts > len(recentPostsListofDicts):
-            print("Number entered is more than posts available. Will just scan all posts available.")
+            print("Number entered is more than posts available. Will just scan all posts available.") # fmt: skip
             numRecentPosts = len(recentPostsListofDicts)
             break
           elif numRecentPosts <= 0:
-            print("Please enter a whole number greater than zero.")
+            print("Please enter a whole number greater than zero.") # fmt: skip
           else:
             break
         except ValueError:
-          print("Invalid Input! - Must be a whole number.")
+          print("Invalid Input! - Must be a whole number.") # fmt: skip
 
       miscData.channelOwnerID = channelID
       miscData.channelOwnerName = channelTitle
@@ -894,7 +894,7 @@ def main():
     elif scanMode == "checkUpdates":
       files.check_lists_update(spamListDict)
       files.check_for_update(version, updateReleaseChannel)
-      input("\nPress Enter to return to main menu...")
+      input("\nPress Enter to return to main menu...") # fmt: skip
       return True
 
     # Recove deleted comments mode
@@ -935,22 +935,22 @@ def main():
       a1 = f"{F.LIGHTRED_EX}*{S.R}"
 
     # User inputs filtering mode
-    print("\n-------------------------------------------------------")
-    print(f"~~~~~~~~~~~ Choose how to identify spammers ~~~~~~~~~~~")
-    print("-------------------------------------------------------")
-    print(f"{S.BRIGHT} 1. {S.R}{F.BLACK}{B.LIGHTGREEN_EX}(RECOMMENDED):{S.R} {S.BRIGHT}{autoSmartColor}Auto-Smart Mode{F.R}: Automatically detects multiple spammer techniques{S.R}")
-    print(f"{S.BRIGHT} 2. {sensitiveColor}Sensitive-Smart Mode{F.R}: Much more likely to catch all spammers, but with significantly more false positives{S.R}")  
-    print(f"{a1}{styleID} 3. Enter Spammer's {IDColor}channel ID(s) or link(s){F.R}{S.R}")
-    print(f"{a2}{styleOther} 4. Scan {usernameColor}usernames{F.R} for criteria you choose{S.R}")
-    print(f"{a2}{styleOther} 5. Scan {textColor}comment text{F.R} for criteria you choose{S.R}")
-    print(f"{a2}{styleOther} 6. Scan both {usernameTextColor}usernames{F.R} and {textColor}comment text{F.R} for criteria you choose{S.R}")
-    print(f"{a2}{styleOther} 7. ASCII Mode: Scan usernames for {asciiColor}ANY non-ASCII special characters{F.R} (May cause collateral damage!){S.R}")
+    print("\n-------------------------------------------------------") # fmt: skip
+    print(f"~~~~~~~~~~~ Choose how to identify spammers ~~~~~~~~~~~") # fmt: skip
+    print("-------------------------------------------------------") # fmt: skip
+    print(f"{S.BRIGHT} 1. {S.R}{F.BLACK}{B.LIGHTGREEN_EX}(RECOMMENDED):{S.R} {S.BRIGHT}{autoSmartColor}Auto-Smart Mode{F.R}: Automatically detects multiple spammer techniques{S.R}") # fmt: skip
+    print(f"{S.BRIGHT} 2. {sensitiveColor}Sensitive-Smart Mode{F.R}: Much more likely to catch all spammers, but with significantly more false positives{S.R}")   # fmt: skip
+    print(f"{a1}{styleID} 3. Enter Spammer's {IDColor}channel ID(s) or link(s){F.R}{S.R}") # fmt: skip
+    print(f"{a2}{styleOther} 4. Scan {usernameColor}usernames{F.R} for criteria you choose{S.R}") # fmt: skip
+    print(f"{a2}{styleOther} 5. Scan {textColor}comment text{F.R} for criteria you choose{S.R}") # fmt: skip
+    print(f"{a2}{styleOther} 6. Scan both {usernameTextColor}usernames{F.R} and {textColor}comment text{F.R} for criteria you choose{S.R}") # fmt: skip
+    print(f"{a2}{styleOther} 7. ASCII Mode: Scan usernames for {asciiColor}ANY non-ASCII special characters{F.R} (May cause collateral damage!){S.R}") # fmt: skip
 
 
     if userNotChannelOwner == True and moderator_mode == False:
-      print(f" {F.LIGHTRED_EX}*Note: With 'Not Your Channel Mode' enabled, you can only report matched comments while using 'Auto-Smart Mode' \n        or 'Sensitive-Smart Mode'.{S.R}") # Based on filterModesAllowedforNonOwners
+      print(f" {F.LIGHTRED_EX}*Note: With 'Not Your Channel Mode' enabled, you can only report matched comments while using 'Auto-Smart Mode' \n        or 'Sensitive-Smart Mode'.{S.R}")  # fmt: skip # Based on filterModesAllowedforNonOwners
     elif userNotChannelOwner == True and moderator_mode == True:
-      print(f" {F.LIGHTRED_EX}*Note: With 'Moderator Mode', you can Hold and/or Report using: 'Auto-Smart', 'Sensitive-Smart', and Channel ID modes.{S.R}")
+      print(f" {F.LIGHTRED_EX}*Note: With 'Moderator Mode', you can Hold and/or Report using: 'Auto-Smart', 'Sensitive-Smart', and Channel ID modes.{S.R}") # fmt: skip
     # Make sure input is valid, if not ask again
     validFilterMode = False
     validFilterSubMode = False
@@ -962,7 +962,7 @@ def main():
       if validConfigSetting == True and config and config['filter_mode'] != 'ask':
         filterChoice = config['filter_mode']
       else:
-        filterChoice = input("\nChoice (1-7): ")
+        filterChoice = input("\nChoice (1-7): ") # fmt: skip
       
       if str(filterChoice).lower() == "x":
         return True # Return to main menu
@@ -987,7 +987,7 @@ def main():
           filterMode = "AutoASCII"
 
       else:
-        print(f"\nInvalid Filter Mode: {filterChoice} - Enter a whole number from 1-7")
+        print(f"\nInvalid Filter Mode: {filterChoice} - Enter a whole number from 1-7") # fmt: skip
         validConfigSetting = False
 
     ## Get filter sub-mode to decide if searching characters or string
@@ -999,22 +999,22 @@ def main():
       validConfigSetting = False
 
     if filterMode == "Username" or filterMode == "Text" or filterMode == "NameAndText":
-      print("\n--------------------------------------------------------------")
+      print("\n--------------------------------------------------------------") # fmt: skip
       if filterMode == "Username":
-        print("~~~ What do you want to scan usernames for specifically? ~~~")
+        print("~~~ What do you want to scan usernames for specifically? ~~~") # fmt: skip
       elif filterMode == "Text":
-        print("~~~ What do you want to scan comment text for specifically? ~~~")
+        print("~~~ What do you want to scan comment text for specifically? ~~~") # fmt: skip
       elif filterMode == "NameAndText":
-        print("~~~ What do you want to scan names and comments for specifically? ~~~")
-      print(f" 1. A {F.CYAN}certain special character{S.R}, or set of multiple characters")
-      print(f" 2. An {F.LIGHTMAGENTA_EX}entire string{S.R}, or multiple strings")
-      print(f" 3. Advanced: A custom {F.YELLOW}Regex pattern{S.R} you'll enter")
+        print("~~~ What do you want to scan names and comments for specifically? ~~~") # fmt: skip
+      print(f" 1. A {F.CYAN}certain special character{S.R}, or set of multiple characters") # fmt: skip
+      print(f" 2. An {F.LIGHTMAGENTA_EX}entire string{S.R}, or multiple strings") # fmt: skip
+      print(f" 3. Advanced: A custom {F.YELLOW}Regex pattern{S.R} you'll enter") # fmt: skip
 
       while validFilterSubMode == False:
         if validConfigSetting == True:
           pass
         else:
-          filterSubMode = input("\nChoice (1, 2, or 3): ")
+          filterSubMode = input("\nChoice (1, 2, or 3): ") # fmt: skip
         if str(filterSubMode).lower() == "x":
           return True # Return to main menu
 
@@ -1029,7 +1029,7 @@ def main():
           elif filterSubMode == "3" or filterSubMode == "regex":
             filterSubMode = "regex"
         else:
-          print(f"\nInvalid choice: {filterSubMode} - Enter 1, 2 or 3")
+          print(f"\nInvalid choice: {filterSubMode} - Enter 1, 2 or 3") # fmt: skip
           validConfigSetting = False
 
 
@@ -1102,7 +1102,7 @@ def main():
         authorKeyAllCommentsDict = {}
         allCommunityCommentsDict = get_community_comments(communityPostID=communityPostID, limit=limit, postScanProgressDict=postScanProgressDict, postText=postText)
         retrievedCount = len(allCommunityCommentsDict)
-        print(f"\nRetrieved {retrievedCount} comments from post.\n")
+        print(f"\nRetrieved {retrievedCount} comments from post.\n") # fmt: skip
         scannedCount = 0
         threadDict = {}
 
@@ -1137,8 +1137,8 @@ def main():
           # Print Progress
           percent = ((scannedCount / retrievedCount) * 100)
           progressStats = f"[ {str(scannedCount)} / {str(retrievedCount)} ]".ljust(15, " ") + f" ({percent:.2f}%)"
-          print(f'  {progressStats}  -  Analyzing Comments For Spam ', end='\r')
-        print("                                                                                        ")
+          print(f'  {progressStats}  -  Analyzing Comments For Spam ', end='\r') # fmt: skip
+        print("                                                                                        ") # fmt: skip
         
         dupeCheckModes = utils.string_to_list(config['duplicate_check_modes'])
         if filtersDict['filterMode'].lower() in dupeCheckModes:
@@ -1146,7 +1146,7 @@ def main():
         # repostCheckModes = utils.string_to_list(config['stolen_comments_check_modes'])
         # if filtersDict['filterMode'].lower() in repostCheckModes:
         #   operations.check_reposts(current, config, miscData, allCommunityCommentsDict, communityPostID)
-          print("                                                                                                                       ")
+          print("                                                                                                                       ") # fmt: skip
           
       if scanMode == "communityPost":
         scan_community_post(current, config, communityPostID, maxScanNumber)
@@ -1166,9 +1166,9 @@ def main():
 
     else:
       # Goes to get comments for first page
-      print("\n------------------------------------------------------------------------------")
-      print("(Note: If the program appears to freeze, try right clicking within the window)\n")
-      print("                          --- Scanning --- \n")
+      print("\n------------------------------------------------------------------------------") # fmt: skip
+      print("(Note: If the program appears to freeze, try right clicking within the window)\n") # fmt: skip
+      print("                          --- Scanning --- \n") # fmt: skip
    
       # ----------------------------------------------------------------------------------------------------------------------
       def scan_video(miscData, config, filtersDict, scanVideoID, videosToScan=None, currentVideoDict={}, videoTitle=None, showTitle=False, i=1):
@@ -1183,7 +1183,7 @@ def main():
             spacesStr = " " * offset
           else:
             spacesStr = ""
-          print(f"Scanning {i}/{len(videosToScan)}: " + videoTitle + spacesStr + "\n")
+          print(f"Scanning {i}/{len(videosToScan)}: " + videoTitle + spacesStr + "\n") # fmt: skip
 
         operations.print_count_stats(current, miscData, videosToScan, final=False)  # Prints comment scan stats, updates on same line
         # After getting first page, if there are more pages, goes to get comments for next page
@@ -1228,53 +1228,53 @@ def main():
         bypass = False
       else:
         bypass = False
-        print("Error Code C-2: Invalid value for 'enable_logging' in config file:  " + logSetting)
+        print("Error Code C-2: Invalid value for 'enable_logging' in config file:  " + logSetting) # fmt: skip
 
     # Counts number of found spam comments and prints list
     if not current.matchedCommentsDict and not current.duplicateCommentsDict and not current.spamThreadsDict and not current.repostedCommentsDict: # If no spam comments found, exits
-      print(f"{B.RED}{F.BLACK} No matched comments or users found! {F.R}{B.R}{S.R}\n")
-      print(f"If you see missed spam or false positives, you can submit a filter suggestion here: {F.YELLOW}TJoe.io/filter-feedback{S.R}")
+      print(f"{B.RED}{F.BLACK} No matched comments or users found! {F.R}{B.R}{S.R}\n") # fmt: skip
+      print(f"If you see missed spam or false positives, you can submit a filter suggestion here: {F.YELLOW}TJoe.io/filter-feedback{S.R}") # fmt: skip
 
       # Can still log to json even though no comments
       if config['json_log_all_comments'] and config['json_log'] and config['enable_logging'] != False:
-        print(f"Because you enabled '{F.LIGHTCYAN_EX}json_log_all_comments{S.R}' in config, {F.LIGHTCYAN_EX}continuing on to log anyway{S.R}.")
+        print(f"Because you enabled '{F.LIGHTCYAN_EX}json_log_all_comments{S.R}' in config, {F.LIGHTCYAN_EX}continuing on to log anyway{S.R}.") # fmt: skip
         jsonSettingsDict = {}
         current, logMode, jsonSettingsDict = logging.prepare_logFile_settings(current, config, miscData, jsonSettingsDict, filtersDict, bypass)
         jsonDataDict = logging.get_extra_json_data([], jsonSettingsDict)
         logging.write_json_log(current, config, jsonSettingsDict, {}, jsonDataDict)
 
       if config['auto_close'] == False:
-        input("\nPress Enter to return to main menu...")
+        input("\nPress Enter to return to main menu...") # fmt: skip
         return True
       elif config['auto_close'] == True:
-        print("\nAuto-close enabled in config. Exiting in 5 seconds...")
+        print("\nAuto-close enabled in config. Exiting in 5 seconds...") # fmt: skip
         time.sleep(5)
         sys.exit()
-    print(f"Number of {S.BRIGHT}{F.LIGHTRED_EX}Matched{S.R} Comments Found: {B.RED}{F.WHITE} {str(len(current.matchedCommentsDict))} {F.R}{B.R}{S.R}")
+    print(f"Number of {S.BRIGHT}{F.LIGHTRED_EX}Matched{S.R} Comments Found: {B.RED}{F.WHITE} {str(len(current.matchedCommentsDict))} {F.R}{B.R}{S.R}") # fmt: skip
     if current.spamThreadsDict:
-      print(f"\nNumber of {S.BRIGHT}{F.RED}Spam Bot Threads{S.R} Found: {S.BRIGHT}{B.RED}{F.WHITE} {str(len(current.spamThreadsDict))} {F.R}{B.R}{S.R}")
+      print(f"\nNumber of {S.BRIGHT}{F.RED}Spam Bot Threads{S.R} Found: {S.BRIGHT}{B.RED}{F.WHITE} {str(len(current.spamThreadsDict))} {F.R}{B.R}{S.R}") # fmt: skip
     if current.duplicateCommentsDict:
-      print(f"\nNumber of {S.BRIGHT}{F.LIGHTBLUE_EX}Non-Matched But Duplicate{S.R} Comments Found: {S.BRIGHT}{F.WHITE}{B.BLUE} {str(len(current.duplicateCommentsDict))} {F.R}{B.R}{S.R}")
+      print(f"\nNumber of {S.BRIGHT}{F.LIGHTBLUE_EX}Non-Matched But Duplicate{S.R} Comments Found: {S.BRIGHT}{F.WHITE}{B.BLUE} {str(len(current.duplicateCommentsDict))} {F.R}{B.R}{S.R}") # fmt: skip
     if current.repostedCommentsDict:
-      print(f"\nNumber of {S.BRIGHT}{F.LIGHTBLUE_EX}Non-Matched But Stolen & Reposted{S.R} Comments Found: {S.BRIGHT}{F.WHITE}{B.BLUE} {str(len(current.repostedCommentsDict))} {F.R}{B.R}{S.R}")
+      print(f"\nNumber of {S.BRIGHT}{F.LIGHTBLUE_EX}Non-Matched But Stolen & Reposted{S.R} Comments Found: {S.BRIGHT}{F.WHITE}{B.BLUE} {str(len(current.repostedCommentsDict))} {F.R}{B.R}{S.R}") # fmt: skip
 
     # If spam comments were found, continue
     if bypass == False:
       # Asks user if they want to save list of spam comments to a file
-      print(f"\nComments ready to display. Also {F.LIGHTGREEN_EX}save a log file?{S.R} {B.GREEN}{F.BLACK} Highly Recommended! {F.R}{B.R}{S.R}")
-      print(f"        (It even allows you to {F.LIGHTGREEN_EX}restore{S.R} deleted comments later)")
+      print(f"\nComments ready to display. Also {F.LIGHTGREEN_EX}save a log file?{S.R} {B.GREEN}{F.BLACK} Highly Recommended! {F.R}{B.R}{S.R}") # fmt: skip
+      print(f"        (It even allows you to {F.LIGHTGREEN_EX}restore{S.R} deleted comments later)") # fmt: skip
       loggingEnabled = choice(f"Save Log File (Recommended)?")
       if loggingEnabled == None:
         return True # Return to main menu
-      print("")
+      print("") # fmt: skip
 
     # Prepare log file and json log file settings - Location and names
     jsonSettingsDict = {}
     if loggingEnabled == True:
       current, logMode, jsonSettingsDict = logging.prepare_logFile_settings(current, config, miscData, jsonSettingsDict, filtersDict, bypass)
-      print("\n-----------------------------------------------------------------------------------------------------------------\n")
+      print("\n-----------------------------------------------------------------------------------------------------------------\n") # fmt: skip
     else:
-      print("Continuing without logging... \n")
+      print("Continuing without logging... \n") # fmt: skip
       logMode = None
       jsonSettingsDict['jsonLogging'] = False
 
@@ -1285,9 +1285,9 @@ def main():
     # Print comments  and write to log files
     logFileContents, logMode = logging.print_comments(current, config, scanVideoID, loggingEnabled, scanMode, logMode)
 
-    print(f"\n{F.WHITE}{B.RED} NOTE: {S.R} Check that all comments listed above are indeed spam.")
-    print(f" > If you see missed spam or false positives, you can submit a filter suggestion here: {F.YELLOW}TJoe.io/filter-feedback{S.R}")
-    print()
+    print(f"\n{F.WHITE}{B.RED} NOTE: {S.R} Check that all comments listed above are indeed spam.") # fmt: skip
+    print(f" > If you see missed spam or false positives, you can submit a filter suggestion here: {F.YELLOW}TJoe.io/filter-feedback{S.R}") # fmt: skip
+    print() # fmt: skip
 
     ### ---------------- Decide whether to skip deletion ----------------
     returnToMenu = False
@@ -1305,20 +1305,20 @@ def main():
     if userNotChannelOwner == True and filterMode not in filterModesAllowedforNonOwners:
       confirmDelete = False
       deletionEnabled = False
-      print(f"{F.LIGHTRED_EX}Error:{S.R}To prevent abuse, even in moderator mode, you can only use filter modes: Auto Smart, Sensitive Smart, and ID")
-      response = input("Press Enter to continue, or type 'x' to return to Main Menu...")
+      print(f"{F.LIGHTRED_EX}Error:{S.R}To prevent abuse, even in moderator mode, you can only use filter modes: Auto Smart, Sensitive Smart, and ID") # fmt: skip
+      response = input("Press Enter to continue, or type 'x' to return to Main Menu...") # fmt: skip
       if response.lower() == 'x':
         return True
 
     # Test skip_deletion preference - If passes both, will either delete or ask user to delete
     if config['skip_deletion'] == True:
-      print("\nConfig setting skip_deletion enabled.")
+      print("\nConfig setting skip_deletion enabled.") # fmt: skip
       returnToMenu = True
 
     elif config['skip_deletion'] != False:
-      print("Error Code C-3: Invalid value for 'skip_deletion' in config file. Must be 'True' or 'False'. Current Value:  " + str(config['skip_deletion']))
-      print(f"Defaulting to '{F.YELLOW}False{S.R}'")
-      input("\nPress Enter to continue...")
+      print("Error Code C-3: Invalid value for 'skip_deletion' in config file. Must be 'True' or 'False'. Current Value:  " + str(config['skip_deletion'])) # fmt: skip
+      print(f"Defaulting to '{F.YELLOW}False{S.R}'") # fmt: skip
+      input("\nPress Enter to continue...") # fmt: skip
 
     ### ----------------------------------------------------------------
 
@@ -1333,8 +1333,8 @@ def main():
       elif config['removal_type'] == "rejected":
         deletionMode = "rejected"
       else:
-        print("Error Code C-4: Invalid value for 'removal_type' in config file. Must be 'heldforreview', 'rejected', or 'reportSpam':  " + config['removal_type'])
-        input("\nPress Enter to exit...")
+        print("Error Code C-4: Invalid value for 'removal_type' in config file. Must be 'heldforreview', 'rejected', or 'reportSpam':  " + config['removal_type']) # fmt: skip
+        input("\nPress Enter to exit...") # fmt: skip
         sys.exit()
 
     # User wants to automatically delete with no user intervention
@@ -1354,36 +1354,36 @@ def main():
             confirmDelete = "hold"
         else:
           # If non-permitted filter mode with delete_without_reviewing, will allow deletion, but now warns and requires usual confirmation prompt
-          print("Error Code C-5: 'delete_without_reviewing' is set to 'True' in config file. So only filter mode 'AutoSmart' allowed..\n")
-          print("Next time use one of those filter modes, or set 'delete_without_reviewing' to 'False'.")
-          print("    > For this run, you will be asked to confirm removal of spam comments.")
-          input("\nPress Enter to continue...")
+          print("Error Code C-5: 'delete_without_reviewing' is set to 'True' in config file. So only filter mode 'AutoSmart' allowed..\n") # fmt: skip
+          print("Next time use one of those filter modes, or set 'delete_without_reviewing' to 'False'.") # fmt: skip
+          print("    > For this run, you will be asked to confirm removal of spam comments.") # fmt: skip
+          input("\nPress Enter to continue...") # fmt: skip
           confirmDelete = None
           deletionEnabled = "Allowed"
       else:
-        print("Error Code C-6: 'delete_without_reviewing' is set to 'True' in config file. So 'removal_type' must be either 'heldForReview' or 'reportSpam'.\n")
-        print("Next time, either set one of those removal types, or set 'delete_without_reviewing' to 'False'.")
-        print("    > For this run, you will be asked to confirm removal of spam comments.")
-        input("\nPress Enter to continue...")
+        print("Error Code C-6: 'delete_without_reviewing' is set to 'True' in config file. So 'removal_type' must be either 'heldForReview' or 'reportSpam'.\n") # fmt: skip
+        print("Next time, either set one of those removal types, or set 'delete_without_reviewing' to 'False'.") # fmt: skip
+        print("    > For this run, you will be asked to confirm removal of spam comments.") # fmt: skip
+        input("\nPress Enter to continue...") # fmt: skip
         confirmDelete = None
         deletionEnabled = "Allowed"
     else:
       # Catch Invalid value    
-      print("Error C-7: Invalid value for 'delete_without_reviewing' in config file. Must be 'True' or 'False':  " + config['delete_without_reviewing'])
-      input("\nPress Enter to exit...")
+      print("Error C-7: Invalid value for 'delete_without_reviewing' in config file. Must be 'True' or 'False':  " + config['delete_without_reviewing']) # fmt: skip
+      input("\nPress Enter to exit...") # fmt: skip
       sys.exit()
 
     # Check if deletion is enabled, otherwise block and quit
     if returnToMenu == False and deletionEnabled != "Allowed" and deletionEnabled != True:
-        print("\nThe deletion functionality was not enabled. Cannot delete or report comments.")
-        print("Possible Cause: You're scanning someone elses video with a non-supported filter mode.\n")
-        print(f"If you think this is a bug, you may report it on this project's GitHub page: {F.YELLOW}TJoe.io/bug-report{S.R}")
+        print("\nThe deletion functionality was not enabled. Cannot delete or report comments.") # fmt: skip
+        print("Possible Cause: You're scanning someone elses video with a non-supported filter mode.\n") # fmt: skip
+        print(f"If you think this is a bug, you may report it on this project's GitHub page: {F.YELLOW}TJoe.io/bug-report{S.R}") # fmt: skip
         if config['auto_close'] == True:
-          print("\nAuto-close enabled in config. Exiting in 5 seconds...")
+          print("\nAuto-close enabled in config. Exiting in 5 seconds...") # fmt: skip
           time.sleep(5)
           sys.exit()
         else:
-          input("\nPress Enter to return to main menu...")
+          input("\nPress Enter to return to main menu...") # fmt: skip
           return True
 
     ### ---------------- Set Up How To Handle Comments  ----------------
@@ -1401,48 +1401,48 @@ def main():
       while confirmDelete == None or confirmDelete.lower() not in validResponses:
         # Title
         if current.errorOccurred == True:
-          print(f"\n--- {F.WHITE}{B.RED} NOTE: {S.R} Options limited due to error during scanning ---")
+          print(f"\n--- {F.WHITE}{B.RED} NOTE: {S.R} Options limited due to error during scanning ---") # fmt: skip
         if exclude == False:
-          print(f"{F.YELLOW}How do you want to handle {F.BLACK}{B.YELLOW} ALL {S.R}{F.YELLOW} the listed comments above?{S.R} (Including Non-Matched Duplicates)")
+          print(f"{F.YELLOW}How do you want to handle {F.BLACK}{B.YELLOW} ALL {S.R}{F.YELLOW} the listed comments above?{S.R} (Including Non-Matched Duplicates)") # fmt: skip
         elif exclude == True:
-          print(f"{F.YELLOW}How do you want to handle the rest of the comments (not ones you {F.LIGHTGREEN_EX}excluded{F.YELLOW})?{S.R}")
+          print(f"{F.YELLOW}How do you want to handle the rest of the comments (not ones you {F.LIGHTGREEN_EX}excluded{F.YELLOW})?{S.R}") # fmt: skip
         if userNotChannelOwner == True and moderator_mode == False:
-          print(f"{F.GREEN}~~ Not Your Channel Mode: Only Reporting is Possible ~~{S.R}")
+          print(f"{F.GREEN}~~ Not Your Channel Mode: Only Reporting is Possible ~~{S.R}") # fmt: skip
         if userNotChannelOwner == True and moderator_mode == True:
-          print(f"{F.GREEN}~~ Moderator Mode: Reporting and Holding for Review is possible ~~{S.R}")
+          print(f"{F.GREEN}~~ Moderator Mode: Reporting and Holding for Review is possible ~~{S.R}") # fmt: skip
 
         # Exclude
         if exclude == False:
-          print(f" > To {F.LIGHTGREEN_EX}exclude certain authors{S.R}: Type \'{F.LIGHTGREEN_EX}exclude{S.R}\' followed by a list of the numbers (or ranges of #'s) {F.LIGHTMAGENTA_EX}from the sample list{S.R}")
-          print("      > Example:  exclude 1, 3-5, 7, 12-15")
-          print(f" > To {F.LIGHTGREEN_EX}only process certain authors{S.R}: Type \'{F.LIGHTGREEN_EX}only{S.R}\' followed by a list of the numbers (or ranges of #s) {F.LIGHTMAGENTA_EX}from the sample list{S.R}")
-          print("      > Example:  only 1, 3-5, 7, 12-15  --  (Will effectively exclude the 'inverse' of the 'only' selected authors)")
+          print(f" > To {F.LIGHTGREEN_EX}exclude certain authors{S.R}: Type \'{F.LIGHTGREEN_EX}exclude{S.R}\' followed by a list of the numbers (or ranges of #'s) {F.LIGHTMAGENTA_EX}from the sample list{S.R}") # fmt: skip
+          print("      > Example:  exclude 1, 3-5, 7, 12-15") # fmt: skip
+          print(f" > To {F.LIGHTGREEN_EX}only process certain authors{S.R}: Type \'{F.LIGHTGREEN_EX}only{S.R}\' followed by a list of the numbers (or ranges of #s) {F.LIGHTMAGENTA_EX}from the sample list{S.R}") # fmt: skip
+          print("      > Example:  only 1, 3-5, 7, 12-15  --  (Will effectively exclude the 'inverse' of the 'only' selected authors)") # fmt: skip
 
         # Delete & Hold
         if exclude == False:
           if userNotChannelOwner == False and current.errorOccurred == False:
-            print(f" > To {F.LIGHTRED_EX}delete ALL of the above comments{S.R}: Type '{F.LIGHTRED_EX}DELETE{S.R}', then hit Enter.")
+            print(f" > To {F.LIGHTRED_EX}delete ALL of the above comments{S.R}: Type '{F.LIGHTRED_EX}DELETE{S.R}', then hit Enter.") # fmt: skip
           if (userNotChannelOwner == False or moderator_mode == True) and current.errorOccurred == False:
-            print(f" > To {F.LIGHTRED_EX}move ALL comments above to 'Held For Review' in YT Studio{S.R}: Type '{F.LIGHTRED_EX}HOLD{S.R}', then hit Enter.")
+            print(f" > To {F.LIGHTRED_EX}move ALL comments above to 'Held For Review' in YT Studio{S.R}: Type '{F.LIGHTRED_EX}HOLD{S.R}', then hit Enter.") # fmt: skip
         elif exclude == True:
           if userNotChannelOwner == False and current.errorOccurred == False:
-            print(f" > To {F.LIGHTRED_EX}delete the rest of the comments{S.R}: Type '{F.LIGHTRED_EX}DELETE{S.R}', then hit Enter.")
+            print(f" > To {F.LIGHTRED_EX}delete the rest of the comments{S.R}: Type '{F.LIGHTRED_EX}DELETE{S.R}', then hit Enter.") # fmt: skip
           if (userNotChannelOwner == False or moderator_mode == True) and current.errorOccurred == False:
-            print(f" > To {F.LIGHTRED_EX}move rest of comments above to 'Held For Review' in YT Studio{S.R}: Type '{F.LIGHTRED_EX}HOLD{S.R}', then hit Enter.")
+            print(f" > To {F.LIGHTRED_EX}move rest of comments above to 'Held For Review' in YT Studio{S.R}: Type '{F.LIGHTRED_EX}HOLD{S.R}', then hit Enter.") # fmt: skip
 
         # Report & None    
         if current.errorOccurred == False:
-          print(f" > To {F.LIGHTCYAN_EX}report the comments for spam{S.R}, type '{F.LIGHTCYAN_EX}REPORT{S.R}'.")
+          print(f" > To {F.LIGHTCYAN_EX}report the comments for spam{S.R}, type '{F.LIGHTCYAN_EX}REPORT{S.R}'.") # fmt: skip
         if loggingEnabled:
-          print(f" > To do nothing and {F.YELLOW}only log{S.R}, type '{F.YELLOW}NONE{S.R}'")
+          print(f" > To do nothing and {F.YELLOW}only log{S.R}, type '{F.YELLOW}NONE{S.R}'") # fmt: skip
         else:
-          print(f" > To do {F.YELLOW}nothing{S.R}, type '{F.YELLOW}NONE{S.R}'")
+          print(f" > To do {F.YELLOW}nothing{S.R}, type '{F.YELLOW}NONE{S.R}'") # fmt: skip
 
         if config['json_log'] == True and config['json_extra_data'] == True and loggingEnabled:
-          print(f"\n{F.WHITE}{B.BLUE} JSON NOTE: {S.R} You must proceed to write the JSON log file, even if you choose nothing")
+          print(f"\n{F.WHITE}{B.BLUE} JSON NOTE: {S.R} You must proceed to write the JSON log file, even if you choose nothing") # fmt: skip
 
         # Take Entry
-        confirmDelete = input("\n (Not Case Sensitive) Input: ")
+        confirmDelete = input("\n (Not Case Sensitive) Input: ") # fmt: skip
 
         # Process Entry
         if confirmDelete.lower() == "delete" and userNotChannelOwner == False:
@@ -1481,8 +1481,8 @@ def main():
 
           # Check that remaining comments list to remove is not empty
           if not current.matchedCommentsDict and not current.duplicateCommentsDict and not current.spamThreadsDict and not current.repostedCommentsDict:
-            print(f"\n{F.YELLOW}All authors excluded, no comments left to remove!{S.R}")
-            input("\nPress Enter to log and/or return to main menu...")
+            print(f"\n{F.YELLOW}All authors excluded, no comments left to remove!{S.R}") # fmt: skip
+            input("\nPress Enter to log and/or return to main menu...") # fmt: skip
             returnToMenu = True
             break
 
@@ -1490,9 +1490,9 @@ def main():
           returnToMenu = True
 
         else:
-          print(f"\n{F.LIGHTRED_EX}ERROR:{S.R} This entry was invalid or not allowed with current settings: {confirmDelete}")
-          input("\nPress Enter to try again...")
-          print("\n")
+          print(f"\n{F.LIGHTRED_EX}ERROR:{S.R} This entry was invalid or not allowed with current settings: {confirmDelete}") # fmt: skip
+          input("\nPress Enter to try again...") # fmt: skip
+          print("\n") # fmt: skip
 
     # Combine commentIDs from different match type dicts
     combinedCommentDict = dict(current.matchedCommentsDict)
@@ -1518,13 +1518,13 @@ def main():
           if config['enable_ban'] == False:
             pass
           elif config['enable_ban'] == True:
-            print("Error Code C-8: 'enable_ban' is set to 'True' in config file. Only possible config options are 'ask' or 'False' when using config.\n")
-            input("Press Enter to continue...")
+            print("Error Code C-8: 'enable_ban' is set to 'True' in config file. Only possible config options are 'ask' or 'False' when using config.\n") # fmt: skip
+            input("Press Enter to continue...") # fmt: skip
           else:
-            print("Error Code C-9: 'enable_ban' is set to an invalid value in config file. Only possible config options are 'ask' or 'False' when using config.\n")
-            input("Press Enter to continue...")
+            print("Error Code C-9: 'enable_ban' is set to an invalid value in config file. Only possible config options are 'ask' or 'False' when using config.\n") # fmt: skip
+            input("Press Enter to continue...") # fmt: skip
         elif deletionMode == "rejected":
-          print("\nAlso ban the spammer(s)?")
+          print("\nAlso ban the spammer(s)?") # fmt: skip
           banChoice = choice(f"{F.YELLOW}Ban{S.R} the spammer(s) ?")
           if banChoice == None:
             banChoice = False
@@ -1535,7 +1535,7 @@ def main():
           if config['remove_all_author_comments'] != 'ask':
             includeOtherAuthorComments = config['remove_all_author_comments']
           else:
-            print(f"\nAlso remove {F.YELLOW}all other comments{S.R} from the selected authors, even if their other comments weren't matched?")
+            print(f"\nAlso remove {F.YELLOW}all other comments{S.R} from the selected authors, even if their other comments weren't matched?") # fmt: skip
             includeOtherAuthorComments = choice("Choose:")
         else:
           includeOtherAuthorComments = False
@@ -1567,7 +1567,7 @@ def main():
           'filtersDict': filtersDict 
           }
         logging.rewrite_log_file(current, logInfo, combinedCommentDict)
-      print("Updating log file, please wait...", end="\r")
+      print("Updating log file, please wait...", end="\r") # fmt: skip
       
       # Appends the excluded comment info to the log file that was just re-written
       if exclude == True:
@@ -1575,25 +1575,25 @@ def main():
           logging.write_rtf(current.logFileName, str(rtfFormattedExcludes))
         elif logInfo['logMode'] == "plaintext":
           logging.write_plaintext_log(current.logFileName, str(plaintextFormattedExcludes))
-      print("                                          ")
+      print("                                          ") # fmt: skip
 
-      print(" Finishing Log File...", end="\r")
+      print(" Finishing Log File...", end="\r") # fmt: skip
       logging.write_log_completion_summary(current, exclude, logMode, banChoice, deletionModeFriendlyName, includeOtherAuthorComments)
-      print("                               ")
+      print("                               ") # fmt: skip
 
       # Write Json Log File
       if config['json_log'] == True and loggingEnabled and (current.matchedCommentsDict or current.duplicateCommentsDict or current.spamThreadsDict or current.repostedCommentsDict):
-        print("\nWriting JSON log file...")
+        print("\nWriting JSON log file...") # fmt: skip
         if config['json_extra_data'] == True:
           if current.errorOccurred == False:
             jsonDataDict = logging.get_extra_json_data(list(current.matchSamplesDict.keys()), jsonSettingsDict)
             logging.write_json_log(current, config, jsonSettingsDict, combinedCommentDict, jsonDataDict)
           else:
-            print(f"\n{F.LIGHTRED_EX}NOTE:{S.R} Extra JSON data collection disabled due to error during scanning")
+            print(f"\n{F.LIGHTRED_EX}NOTE:{S.R} Extra JSON data collection disabled due to error during scanning") # fmt: skip
         else:
           logging.write_json_log(current, config, jsonSettingsDict, combinedCommentDict)
         if returnToMenu == True:
-          print("\nJSON Operation Finished.")
+          print("\nJSON Operation Finished.") # fmt: skip
     ### ---------------- Reporting / Deletion Begin  ----------------
     if returnToMenu == False:
       if proceedWithDeletion == True:
@@ -1602,44 +1602,44 @@ def main():
           if config['check_deletion_success'] == True:
             operations.check_deleted_comments(list(combinedCommentDict))
           elif config['check_deletion_success'] == False:
-            print("\nSkipped checking if deletion was successful.\n")
+            print("\nSkipped checking if deletion was successful.\n") # fmt: skip
 
       if config['auto_close'] == True:
-        print("\nProgram Complete.")
-        print("Auto-close enabled in config. Exiting in 5 seconds...")
+        print("\nProgram Complete.") # fmt: skip
+        print("Auto-close enabled in config. Exiting in 5 seconds...") # fmt: skip
         time.sleep(5)
         sys.exit()
       else:
-        input(f"\nProgram {F.LIGHTGREEN_EX}Complete{S.R}. Press Enter to to return to main menu...")
+        input(f"\nProgram {F.LIGHTGREEN_EX}Complete{S.R}. Press Enter to to return to main menu...") # fmt: skip
         return True
     elif current.errorOccurred == True:
       if config['auto_close'] == True:
-        print("Deletion disabled due to error during scanning. Auto-close enabled in config. Exiting in 5 seconds...")
+        print("Deletion disabled due to error during scanning. Auto-close enabled in config. Exiting in 5 seconds...") # fmt: skip
         time.sleep(5)
         sys.exit()
       else:
-        input(f"\nDeletion disabled due to error during scanning. Press Enter to return to main menu...")
+        input(f"\nDeletion disabled due to error during scanning. Press Enter to return to main menu...") # fmt: skip
         return True
 
     elif config['skip_deletion'] == True:
       if config['auto_close'] == True:
-        print("\nDeletion disabled in config file.")
-        print("Auto-close enabled in config. Exiting in 5 seconds...")
+        print("\nDeletion disabled in config file.") # fmt: skip
+        print("Auto-close enabled in config. Exiting in 5 seconds...") # fmt: skip
         time.sleep(5)
         sys.exit()
       else:
         if confirmDelete != None and str(confirmDelete.lower()) == "none":
-          input(f"\nDeletion {F.LIGHTCYAN_EX}Declined{S.R}. Press Enter to to return to main menu...")
+          input(f"\nDeletion {F.LIGHTCYAN_EX}Declined{S.R}. Press Enter to to return to main menu...") # fmt: skip
         else:
-          input(f"\nDeletion {F.LIGHTRED_EX}Cancelled{S.R}. Press Enter to to return to main menu...")
+          input(f"\nDeletion {F.LIGHTRED_EX}Cancelled{S.R}. Press Enter to to return to main menu...") # fmt: skip
         return True
     else:
       if config['auto_close'] == True:
-        print("Deletion Cancelled. Auto-close enabled in config. Exiting in 5 seconds...")
+        print("Deletion Cancelled. Auto-close enabled in config. Exiting in 5 seconds...") # fmt: skip
         time.sleep(5)
         sys.exit()
       else:
-        input(f"\nDeletion {F.LIGHTRED_EX}Cancelled{S.R}. Press Enter to to return to main menu...")
+        input(f"\nDeletion {F.LIGHTRED_EX}Cancelled{S.R}. Press Enter to to return to main menu...") # fmt: skip
         return True
   # -------------------------------------------------------------------------------------------------------------------------------------------------
   # ------------------------------------------------END PRIMARY INSTANCE-----------------------------------------------------------------------------
@@ -1668,7 +1668,7 @@ if __name__ == "__main__":
 
 
 # -------------------------------------------------------------------------------------------------------------------------------------------------
-  print("Running Main Program...")
+  print("Running Main Program...") # fmt: skip
   try:
     #remind()
     main()
@@ -1678,68 +1678,68 @@ if __name__ == "__main__":
     sys.exit()
   except HttpError as hx:
     traceback.print_exc()
-    print("------------------------------------------------")
-    print("Error Message: " + str(hx))
+    print("------------------------------------------------") # fmt: skip
+    print("Error Message: " + str(hx)) # fmt: skip
     if hx.status_code:
-      print("Status Code: " + str(hx.status_code))
+      print("Status Code: " + str(hx.status_code)) # fmt: skip
       if hx.error_details[0]["reason"]: # If error reason is available, print it
           reason = str(hx.error_details[0]["reason"])
           utils.print_exception_reason(reason)
-      print(f"\nAn {F.LIGHTRED_EX}'HttpError'{S.R} was raised. This is sometimes caused by a remote server error. See the error info above.")
-      print(f"If this keeps happening, consider posting a bug report on the GitHub issues page, and include the above error info.")
-      print(f"Short Link: {F.YELLOW}TJoe.io/bug-report{S.R}")
-      input("\nPress Enter to Exit...")
+      print(f"\nAn {F.LIGHTRED_EX}'HttpError'{S.R} was raised. This is sometimes caused by a remote server error. See the error info above.") # fmt: skip
+      print(f"If this keeps happening, consider posting a bug report on the GitHub issues page, and include the above error info.") # fmt: skip
+      print(f"Short Link: {F.YELLOW}TJoe.io/bug-report{S.R}") # fmt: skip
+      input("\nPress Enter to Exit...") # fmt: skip
     else:
-      print(f"{F.LIGHTRED_EX}Unknown Error - Code: Z-1{S.R} occurred. If this keeps happening, consider posting a bug report on the GitHub issues page, and include the above error info.")
-      print(f"Short Link: {F.YELLOW}TJoe.io/bug-report{S.R}")
-      input("\n Press Enter to Exit...")
+      print(f"{F.LIGHTRED_EX}Unknown Error - Code: Z-1{S.R} occurred. If this keeps happening, consider posting a bug report on the GitHub issues page, and include the above error info.") # fmt: skip
+      print(f"Short Link: {F.YELLOW}TJoe.io/bug-report{S.R}") # fmt: skip
+      input("\n Press Enter to Exit...") # fmt: skip
   except UnboundLocalError as ux:
     traceback.print_exc()
-    print("------------------------------------------------")
-    print("Error Message: " + str(ux))
+    print("------------------------------------------------") # fmt: skip
+    print("Error Message: " + str(ux)) # fmt: skip
     if "referenced before assignment" in str(ux):
-      print(f"\n{F.LIGHTRED_EX}Error - Code: X-2{S.R} occurred. This is almost definitely {F.YELLOW}my fault and requires patching{S.R} (big bruh moment)")
-      print(f"Please post a bug report on the GitHub issues page, and include the above error info.")
-      print(f"Short Link: {F.YELLOW}TJoe.io/bug-report{S.R}")
-      print("    (In the mean time, try using a previous release of the program.)")
-      input("\n Press Enter to Exit...")
+      print(f"\n{F.LIGHTRED_EX}Error - Code: X-2{S.R} occurred. This is almost definitely {F.YELLOW}my fault and requires patching{S.R} (big bruh moment)") # fmt: skip
+      print(f"Please post a bug report on the GitHub issues page, and include the above error info.") # fmt: skip
+      print(f"Short Link: {F.YELLOW}TJoe.io/bug-report{S.R}") # fmt: skip
+      print("    (In the mean time, try using a previous release of the program.)") # fmt: skip
+      input("\n Press Enter to Exit...") # fmt: skip
     else:
       traceback.print_exc()
-      print("------------------------------------------------")
-      print(f"\n{F.LIGHTRED_EX}Unknown Error - Code: Z-2{S.R} occurred. If this keeps happening,")
-      print("consider posting a bug report on the GitHub issues page, and include the above error info.")
-      print(f"Short Link: {F.YELLOW}TJoe.io/bug-report{S.R}")
-      input("\n Press Enter to Exit...")
+      print("------------------------------------------------") # fmt: skip
+      print(f"\n{F.LIGHTRED_EX}Unknown Error - Code: Z-2{S.R} occurred. If this keeps happening,") # fmt: skip
+      print("consider posting a bug report on the GitHub issues page, and include the above error info.") # fmt: skip
+      print(f"Short Link: {F.YELLOW}TJoe.io/bug-report{S.R}") # fmt: skip
+      input("\n Press Enter to Exit...") # fmt: skip
   except KeyError as kx:
     traceback.print_exc()
-    print("------------------------------------------------")
+    print("------------------------------------------------") # fmt: skip
     if "config" in str(kx):
-      print(f"{F.LIGHTRED_EX}Unknown Error - Code: X-3{S.R}")
-      print("Are you using an outdated version of the config file? Try re-creating the config file to get the latest version.")
-      print(f"{F.LIGHTYELLOW_EX}If that doesn't work{S.R}, consider posting a {F.LIGHTYELLOW_EX}bug report{S.R} on the GitHub issues page, and include the above error info.")
+      print(f"{F.LIGHTRED_EX}Unknown Error - Code: X-3{S.R}") # fmt: skip
+      print("Are you using an outdated version of the config file? Try re-creating the config file to get the latest version.") # fmt: skip
+      print(f"{F.LIGHTYELLOW_EX}If that doesn't work{S.R}, consider posting a {F.LIGHTYELLOW_EX}bug report{S.R} on the GitHub issues page, and include the above error info.") # fmt: skip
     else:
-      print(f"{F.RED}Unknown Error - Code: X-4{S.R} occurred. This is {F.YELLOW}probably my fault{S.R},")
-      print(f"please a {F.LIGHTYELLOW_EX}bug report{S.R} on the GitHub issues page, and include the above error info.")
-    print(f"Short Link: {F.YELLOW}TJoe.io/bug-report{S.R}")
-    input("\n Press Enter to Exit...")
+      print(f"{F.RED}Unknown Error - Code: X-4{S.R} occurred. This is {F.YELLOW}probably my fault{S.R},") # fmt: skip
+      print(f"please a {F.LIGHTYELLOW_EX}bug report{S.R} on the GitHub issues page, and include the above error info.") # fmt: skip
+    print(f"Short Link: {F.YELLOW}TJoe.io/bug-report{S.R}") # fmt: skip
+    input("\n Press Enter to Exit...") # fmt: skip
   except TypeError:
     traceback.print_exc()
-    print("------------------------------------------------")
-    print(f"{F.RED}Unknown Error - Code: X-5{S.R} occurred. This is {F.YELLOW}probably my fault{S.R},")
-    print(f"please a {F.LIGHTYELLOW_EX}bug report{S.R} on the GitHub issues page, and include the above error info.")
-    print(f"Short Link: {F.YELLOW}TJoe.io/bug-report{S.R}")
-    input("\n Press Enter to Exit...")
+    print("------------------------------------------------") # fmt: skip
+    print(f"{F.RED}Unknown Error - Code: X-5{S.R} occurred. This is {F.YELLOW}probably my fault{S.R},") # fmt: skip
+    print(f"please a {F.LIGHTYELLOW_EX}bug report{S.R} on the GitHub issues page, and include the above error info.") # fmt: skip
+    print(f"Short Link: {F.YELLOW}TJoe.io/bug-report{S.R}") # fmt: skip
+    input("\n Press Enter to Exit...") # fmt: skip
   except KeyboardInterrupt:
-    print("\n\nProcess Cancelled via Keyboard Shortcut")
+    print("\n\nProcess Cancelled via Keyboard Shortcut") # fmt: skip
     sys.exit()
   except Exception as x:
     traceback.print_exc()
-    print("------------------------------------------------")
-    print("Error Message: " + str(x))
-    print(f"\n{F.LIGHTRED_EX}Unknown Error - Code: Z-3{S.R} occurred. If this keeps happening, consider posting a bug report")
-    print("on the GitHub issues page, and include the above error info.")
-    print(f"Short Link: {F.YELLOW}TJoe.io/bug-report{S.R}")
-    input("\n Press Enter to Exit...")
+    print("------------------------------------------------") # fmt: skip
+    print("Error Message: " + str(x)) # fmt: skip
+    print(f"\n{F.LIGHTRED_EX}Unknown Error - Code: Z-3{S.R} occurred. If this keeps happening, consider posting a bug report") # fmt: skip
+    print("on the GitHub issues page, and include the above error info.") # fmt: skip
+    print(f"Short Link: {F.YELLOW}TJoe.io/bug-report{S.R}") # fmt: skip
+    input("\n Press Enter to Exit...") # fmt: skip
   else:
-    print("\nFinished Executing.")
+    print("\nFinished Executing.") # fmt: skip
 	

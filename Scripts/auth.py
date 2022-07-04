@@ -51,11 +51,11 @@ def get_authenticated_service():
     if os.path.exists(f"{CLIENT_SECRETS_FILE}.json"):
       CLIENT_SECRETS_FILE = CLIENT_SECRETS_FILE + ".json"
     else:
-      print(f"\n         ----- {F.WHITE}{B.RED}[!] Error:{S.R} client_secrets.json file not found -----")
-      print(f" ----- Did you create a {F.YELLOW}Google Cloud Platform Project{S.R} to access the API? ----- ")
-      print(f"  > For instructions on how to get an API key, visit: {F.YELLOW}TJoe.io/api-setup{S.R}")
-      print(f"\n  > (Non-shortened Link: https://github.com/ThioJoe/YT-Spammer-Purge/wiki/Instructions:-Obtaining-an-API-Key)")
-      input("\nPress Enter to Exit...")
+      print(f"\n         ----- {F.WHITE}{B.RED}[!] Error:{S.R} client_secrets.json file not found -----") # fmt: skip
+      print(f" ----- Did you create a {F.YELLOW}Google Cloud Platform Project{S.R} to access the API? ----- ") # fmt: skip
+      print(f"  > For instructions on how to get an API key, visit: {F.YELLOW}TJoe.io/api-setup{S.R}") # fmt: skip
+      print(f"\n  > (Non-shortened Link: https://github.com/ThioJoe/YT-Spammer-Purge/wiki/Instructions:-Obtaining-an-API-Key)") # fmt: skip
+      input("\nPress Enter to Exit...") # fmt: skip
       sys.exit()
 
   creds = None
@@ -69,10 +69,10 @@ def get_authenticated_service():
     if creds and creds.expired and creds.refresh_token:
       creds.refresh(Request())
     else:
-      print(f"\nPlease {F.YELLOW}login using the browser window{S.R} that opened just now.\n")
+      print(f"\nPlease {F.YELLOW}login using the browser window{S.R} that opened just now.\n") # fmt: skip
       flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRETS_FILE, scopes=YOUTUBE_READ_WRITE_SSL_SCOPE)
       creds = flow.run_local_server(port=0, authorization_prompt_message="Waiting for authorization. See message above.")
-      print(f"{F.GREEN}[OK] Authorization Complete.{S.R}")
+      print(f"{F.GREEN}[OK] Authorization Complete.{S.R}") # fmt: skip
       # Save the credentials for the next run
     with open(TOKEN_FILE_NAME, 'w') as token:
       token.write(creds.to_json())
@@ -85,24 +85,24 @@ def first_authentication():
   try:
     YOUTUBE = get_authenticated_service() # Create authentication object
   except JSONDecodeError as jx:
-    print(f"{F.WHITE}{B.RED} [!!!] Error: {S.R}" + str(jx))
-    print(f"\nDid you make the client_secrets.json file yourself by {F.LIGHTRED_EX}copying and pasting into it{S.R}, instead of {F.LIGHTGREEN_EX}downloading it{S.R}?")
-    print(f"You need to {F.YELLOW}download the json file directly from the google cloud dashboard{S.R} as shown in the instructions.")
-    print("If you think this is a bug, you may report it on this project's GitHub page: https://github.com/ThioJoe/YT-Spammer-Purge/issues")
-    input("Press Enter to Exit...")
+    print(f"{F.WHITE}{B.RED} [!!!] Error: {S.R}" + str(jx)) # fmt: skip
+    print(f"\nDid you make the client_secrets.json file yourself by {F.LIGHTRED_EX}copying and pasting into it{S.R}, instead of {F.LIGHTGREEN_EX}downloading it{S.R}?") # fmt: skip
+    print(f"You need to {F.YELLOW}download the json file directly from the google cloud dashboard{S.R} as shown in the instructions.") # fmt: skip
+    print("If you think this is a bug, you may report it on this project's GitHub page: https://github.com/ThioJoe/YT-Spammer-Purge/issues") # fmt: skip
+    input("Press Enter to Exit...") # fmt: skip
     sys.exit()
   except Exception as e:
     if "invalid_grant" in str(e):
-      print(f"{F.YELLOW}[!] Invalid token{S.R} - Requires Re-Authentication")
+      print(f"{F.YELLOW}[!] Invalid token{S.R} - Requires Re-Authentication") # fmt: skip
       os.remove(TOKEN_FILE_NAME)
       YOUTUBE = get_authenticated_service()
     else:
-      print('\n')
+      print('\n') # fmt: skip
       traceback.print_exc() # Prints traceback
-      print("----------------")
-      print(f"{F.RED}[!!!] Error: {S.R}" + str(e))
-      print("If you think this is a bug, you may report it on this project's GitHub page: https://github.com/ThioJoe/YT-Spammer-Purge/issues")
-      input(f"\nError Code A-1: {F.RED}Something went wrong during authentication.{S.R} {F.YELLOW}Try deleting the token.pickle file.{S.R} \nPress Enter to exit...")
+      print("----------------") # fmt: skip
+      print(f"{F.RED}[!!!] Error: {S.R}" + str(e)) # fmt: skip
+      print("If you think this is a bug, you may report it on this project's GitHub page: https://github.com/ThioJoe/YT-Spammer-Purge/issues") # fmt: skip
+      input(f"\nError Code A-1: {F.RED}Something went wrong during authentication.{S.R} {F.YELLOW}Try deleting the token.pickle file.{S.R} \nPress Enter to exit...") # fmt: skip
       sys.exit()
   return YOUTUBE
 
@@ -127,13 +127,13 @@ def get_current_user(config):
   # Fetch the channel ID and title from the API response
   # Catch exceptions if problems getting info
   if len(results) == 0: # Check if results are empty
-    print("\n----------------------------------------------------------------------------------------")
-    print(f"{F.YELLOW}Error Getting Current User{S.R}: The YouTube API responded, but did not provide a Channel ID.")
-    print(f"{F.CYAN}Known Possible Causes:{S.R}")
-    print("> The client_secrets file does not match user authorized with token.pickle file.")
-    print("> You are logging in with a Google account that does not have a YouTube channel created yet.")
-    print("> When choosing the account to log into, you selected the option showing the Google Account's email address, which might not have a channel attached to it.")
-    input("\nPress Enter to try logging in again...")
+    print("\n----------------------------------------------------------------------------------------") # fmt: skip
+    print(f"{F.YELLOW}Error Getting Current User{S.R}: The YouTube API responded, but did not provide a Channel ID.") # fmt: skip
+    print(f"{F.CYAN}Known Possible Causes:{S.R}") # fmt: skip
+    print("> The client_secrets file does not match user authorized with token.pickle file.") # fmt: skip
+    print("> You are logging in with a Google account that does not have a YouTube channel created yet.") # fmt: skip
+    print("> When choosing the account to log into, you selected the option showing the Google Account's email address, which might not have a channel attached to it.") # fmt: skip
+    input("\nPress Enter to try logging in again...") # fmt: skip
     os.remove(TOKEN_FILE_NAME)
 
     global YOUTUBE
@@ -148,21 +148,21 @@ def get_current_user(config):
     try:
       channelTitle = results["items"][0]["snippet"]["title"] # If channel ID was found, but not channel title/name
     except KeyError:
-      print("Error Getting Current User: Channel ID was found, but channel title was not retrieved. If this occurs again, try deleting 'token.pickle' file and re-running. If that doesn't work, consider filing a bug report on the GitHub project 'issues' page.")
-      print("> NOTE: The program may still work - You can try continuing. Just check the channel ID is correct: " + str(channelID))
+      print("Error Getting Current User: Channel ID was found, but channel title was not retrieved. If this occurs again, try deleting 'token.pickle' file and re-running. If that doesn't work, consider filing a bug report on the GitHub project 'issues' page.") # fmt: skip
+      print("> NOTE: The program may still work - You can try continuing. Just check the channel ID is correct: " + str(channelID)) # fmt: skip
       channelTitle = ""
-      input("Press Enter to Continue...")
+      input("Press Enter to Continue...") # fmt: skip
       pass
   except ChannelIDError:
     traceback.print_exc()
-    print("\nError: Still unable to get channel info. Big Bruh Moment. Try deleting token.pickle. The info above might help if you want to report a bug.")
-    print("Note: A channel ID was retrieved but is invalid: " + str(channelID))
-    input("\nPress Enter to Exit...")
+    print("\nError: Still unable to get channel info. Big Bruh Moment. Try deleting token.pickle. The info above might help if you want to report a bug.") # fmt: skip
+    print("Note: A channel ID was retrieved but is invalid: " + str(channelID)) # fmt: skip
+    input("\nPress Enter to Exit...") # fmt: skip
     sys.exit()
   except KeyError:
     traceback.print_exc()
-    print("\nError: Still unable to get channel info. Big Bruh Moment. Try deleting token.pickle. The info above might help if you want to report a bug.")
-    input("\nPress Enter to Exit...")
+    print("\nError: Still unable to get channel info. Big Bruh Moment. Try deleting token.pickle. The info above might help if you want to report a bug.") # fmt: skip
+    input("\nPress Enter to Exit...") # fmt: skip
     sys.exit()
   
   if config == None:
@@ -173,12 +173,12 @@ def get_current_user(config):
     if config['your_channel_id'] == channelID:
       configMatch = True
     else:
-      print("Error: The channel ID in the config file appears to be valid, but does not match the channel ID of the currently logged in user.")
-      input("Please check the config file. Press Enter to Exit...")
+      print("Error: The channel ID in the config file appears to be valid, but does not match the channel ID of the currently logged in user.") # fmt: skip
+      input("Please check the config file. Press Enter to Exit...") # fmt: skip
       sys.exit()
   else:
-    print("Error: The channel ID in the config file appears to be invalid.")
-    input("Please check the config file. Press Enter to Exit...")
+    print("Error: The channel ID in the config file appears to be invalid.") # fmt: skip
+    input("Please check the config file. Press Enter to Exit...") # fmt: skip
     sys.exit()
 
   return channelID, channelTitle, configMatch  

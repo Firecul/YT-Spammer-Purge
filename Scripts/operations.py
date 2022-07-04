@@ -151,14 +151,14 @@ def get_comments(current, filtersDict, miscData, config, allVideoCommentsDict, s
   if RetrievedNextPageToken == "End" and allVideoCommentsDict:
     dupeCheckModes = utils.string_to_list(config['duplicate_check_modes'])
     if filtersDict['filterMode'].lower() in dupeCheckModes:
-      print(" Analyzing For Duplicates                                                                                        ", end="\r")
+      print(" Analyzing For Duplicates                                                                                        ", end="\r") # fmt: skip
       check_duplicates(current, config, miscData, allVideoCommentsDict, videoID)
-      print("                                                                                                                       ")
+      print("                                                                                                                       ") # fmt: skip
     repostCheckModes = utils.string_to_list(config['stolen_comments_check_modes'])
     if filtersDict['filterMode'].lower() in repostCheckModes:
-      print(" Analyzing For Reposts                                                                                           ", end="\r")
+      print(" Analyzing For Reposts                                                                                           ", end="\r") # fmt: skip
       check_reposts(current, config, miscData, allVideoCommentsDict, videoID)
-      print("                                                                                                                       ")
+      print("                                                                                                                       ") # fmt: skip
 
   current.allScannedCommentsDict.update(allVideoCommentsDict)
   return RetrievedNextPageToken, allVideoCommentsDict
@@ -558,7 +558,7 @@ def add_spam(current, config, miscData, currentCommentDict, videoID, matchReason
 
 def get_all_author_comments(current, config, miscData, allCommentsDict):
   # Make set of all matched author IDs
-  print(" Finding all other comments by authors...", end="\r")
+  print(" Finding all other comments by authors...", end="\r") # fmt: skip
   totalCommentsAmount = len(allCommentsDict)
   scannedCount = 0
   matchedAuthorIDSet = set()
@@ -570,10 +570,10 @@ def get_all_author_comments(current, config, miscData, allCommentsDict):
     if authorID in matchedAuthorIDSet:
       for commentDict in authorCommentsListofDicts:
         scannedCount += 1
-        print(f" Finding all other comments by authors: [ {scannedCount/totalCommentsAmount*100:.2f}% ]".ljust(40, " "), end="\r")
+        print(f" Finding all other comments by authors: [ {scannedCount/totalCommentsAmount*100:.2f}% ]".ljust(40, " "), end="\r") # fmt: skip
         if commentDict['commentID'] not in current.matchedCommentsDict:
           add_spam(current, config, miscData, commentDict, commentDict['videoID'], matchReason="Also By Matched Author")
-  print("".ljust(55, " "))
+  print("".ljust(55, " ")) # fmt: skip
 
   return current
 
@@ -589,8 +589,8 @@ def check_duplicates(current, config, miscData, allVideoCommentsDict, videoID):
   minimum_duplicates = int(config['minimum_duplicates'])
   if minimum_duplicates < 2:
     minimum_duplicates = 4
-    print("\nError: minimum_duplicates config setting must be greater than 1. Defaulting to 8.")
-    input("\nPress Enter to continue...")
+    print("\nError: minimum_duplicates config setting must be greater than 1. Defaulting to 8.") # fmt: skip
+    input("\nPress Enter to continue...") # fmt: skip
   
   # Get minimum duplicate length setting - Does not need to be validated as int here, because that happens at beginning of program
   minimum_duplicate_length = int(config['minimum_duplicate_length'])
@@ -604,7 +604,7 @@ def check_duplicates(current, config, miscData, allVideoCommentsDict, videoID):
     # Don't scan channel owner, current user, or any user in whitelist. Also don't bother if author is already in matchedCommentsDict
     if auth.CURRENTUSER.id == authorID or miscData.channelOwnerID == authorID or authorID in miscData.resources['Whitelist']['WhitelistContents'] or any(authorID == value['authorID'] for key,value in current.matchedCommentsDict.items()):
       scannedCount +=1
-      print(f" Analyzing For Duplicates: [ {scannedCount/authorCount*100:.2f}% ]   (Can be Disabled & Customized With Config File)".ljust(75, " "), end="\r")
+      print(f" Analyzing For Duplicates: [ {scannedCount/authorCount*100:.2f}% ]   (Can be Disabled & Customized With Config File)".ljust(75, " "), end="\r") # fmt: skip
     else:
       numDupes = 0
       commentTextList = []
@@ -646,9 +646,9 @@ def check_duplicates(current, config, miscData, allVideoCommentsDict, videoID):
         for commentDict in authorCommentsList:
           add_spam(current, config, miscData, commentDict, videoID, matchReason="Duplicate")
       scannedCount +=1
-      print(f" Analyzing For Duplicates: [ {scannedCount/authorCount*100:.2f}% ]   (Can be Disabled & Customized With Config File)".ljust(75, " "), end="\r")
+      print(f" Analyzing For Duplicates: [ {scannedCount/authorCount*100:.2f}% ]   (Can be Disabled & Customized With Config File)".ljust(75, " "), end="\r") # fmt: skip
 
-  print("".ljust(110, " ")) # Erase line
+  print("".ljust(110, " "))  # fmt: skip # Erase line
 
 
 ############################# Check Text Reposts #####################################
@@ -658,12 +658,12 @@ def check_reposts(current, config, miscData, allVideoCommentsDict, videoID):
     try:
       levenshtein = float(config['levenshtein_distance'])
       if levenshtein < 0 or levenshtein > 1:
-        print("\nError: Levenshtein_distance config setting must be between 0 and 1. Defaulting to 0.9")
-        input("\nPress Enter to continue...")
+        print("\nError: Levenshtein_distance config setting must be between 0 and 1. Defaulting to 0.9") # fmt: skip
+        input("\nPress Enter to continue...") # fmt: skip
         levenshtein = 0.9
     except ValueError:
-      print("\nError: Levenshtein_distance config setting must be a number between 0 and 1. Defaulting to 0.9")
-      input("\nPress Enter to continue...")
+      print("\nError: Levenshtein_distance config setting must be a number between 0 and 1. Defaulting to 0.9") # fmt: skip
+      input("\nPress Enter to continue...") # fmt: skip
       levenshtein = 0.9
     fuzzy = True
   else:
@@ -674,12 +674,12 @@ def check_reposts(current, config, miscData, allVideoCommentsDict, videoID):
     minLength = int(config['stolen_minimum_text_length'])
     if minLength < 1:
       minLength = 25
-      print("\nError: stolen_minimum_text_length config setting must be greater than 0. Defaulting to 25.")
-      input("\nPress Enter to continue...")
+      print("\nError: stolen_minimum_text_length config setting must be greater than 0. Defaulting to 25.") # fmt: skip
+      input("\nPress Enter to continue...") # fmt: skip
   except ValueError:
     minLength = 25
-    print("\nError: stolen_minimum_text_length config setting is invalid. Defaulting to 25.")
-    input("\nPress Enter to continue...")
+    print("\nError: stolen_minimum_text_length config setting is invalid. Defaulting to 25.") # fmt: skip
+    input("\nPress Enter to continue...") # fmt: skip
 
   flatCommentList = []
 
@@ -711,9 +711,9 @@ def check_reposts(current, config, miscData, allVideoCommentsDict, videoID):
             add_spam(current, config, miscData, x, videoID, matchReason="Repost")
             break
     scannedCount += 1
-    print(f" Analyzing For Stolen / Reposted Comments: [ {scannedCount/totalComments*100:.2f}% ]   (Can be Disabled & Customized With Config File)".ljust(75, " "), end="\r")
+    print(f" Analyzing For Stolen / Reposted Comments: [ {scannedCount/totalComments*100:.2f}% ]   (Can be Disabled & Customized With Config File)".ljust(75, " "), end="\r") # fmt: skip
 
-  print("".ljust(110, " ")) # Erase line
+  print("".ljust(110, " "))  # fmt: skip # Erase line
     
 
 ##########################################################################################
@@ -1032,7 +1032,7 @@ def check_against_filter(current, filtersDict, miscData, config, currentCommentD
 
 # Takes in list of comment IDs to delete, breaks them into 50-comment chunks, and deletes them in groups
 def delete_found_comments(commentsList, banChoice, deletionMode, recoveryMode=False, skipCheck = False):
-  print("\n")
+  print("\n") # fmt: skip
   if deletionMode == "rejected":
     actionPresent = "Deleting"
     actionPast = "Deleted"
@@ -1052,7 +1052,7 @@ def delete_found_comments(commentsList, banChoice, deletionMode, recoveryMode=Fa
     if deletionMode == "reportSpam":
       result = auth.YOUTUBE.comments().markAsSpam(id=commentIDs).execute()
       if len(result) > 0:
-        print("\nSomething may gone wrong when reporting the comments.")
+        print("\nSomething may gone wrong when reporting the comments.") # fmt: skip
         failedComments += commentIDs
     elif deletionMode == "heldForReview" or deletionMode == "rejected" or deletionMode == "published":
       try:
@@ -1060,22 +1060,22 @@ def delete_found_comments(commentsList, banChoice, deletionMode, recoveryMode=Fa
         if len(response) > 0:
           failedComments += commentIDs
       except HttpError:
-        print("\nSomething has gone wrong when removing some comments...")
+        print("\nSomething has gone wrong when removing some comments...") # fmt: skip
         failedComments += commentIDs
 
     else:
-      print("Invalid deletion mode. This is definitely a bug, please report it here: https://github.com/ThioJoe/YT-Spammer-Purge/issues")
-      print("Deletion Mode Is: " + deletionMode)
-      input("Press Enter to Exit...")
+      print("Invalid deletion mode. This is definitely a bug, please report it here: https://github.com/ThioJoe/YT-Spammer-Purge/issues") # fmt: skip
+      print("Deletion Mode Is: " + deletionMode) # fmt: skip
+      input("Press Enter to Exit...") # fmt: skip
       sys.exit()
     return failedComments
 
 
   def print_progress(d, t, recoveryMode=False): 
     if recoveryMode == False:
-      print(actionPresent +" Comments... - Progress: [" + str(d) + " / " + str(t) + "] (In Groups of 50)", end="\r")
+      print(actionPresent +" Comments... - Progress: [" + str(d) + " / " + str(t) + "] (In Groups of 50)", end="\r") # fmt: skip
     elif recoveryMode == True:
-      print("Recovering Comments... - Progress: [" + str(d) + " / " + str(t) + "] (In Groups of 50)", end="\r")
+      print("Recovering Comments... - Progress: [" + str(d) + " / " + str(t) + "] (In Groups of 50)", end="\r") # fmt: skip
 
   total = len(commentsList)
   deletedCounter = 0  
@@ -1096,14 +1096,14 @@ def delete_found_comments(commentsList, banChoice, deletionMode, recoveryMode=Fa
       failedComments = setStatus(commentsList, failedComments)
       print_progress(deletedCounter, total, recoveryMode)
   if deletionMode == "reportSpam":
-    print(f"{F.YELLOW}Comments Reported!{S.R} If no error messages were displayed, then everything was successful.")
+    print(f"{F.YELLOW}Comments Reported!{S.R} If no error messages were displayed, then everything was successful.") # fmt: skip
     return failedComments
   elif recoveryMode == False and skipCheck == False:
-    print("Comments " + actionPast + "! Will now verify each is gone.                          \n")
+    print("Comments " + actionPast + "! Will now verify each is gone.                          \n") # fmt: skip
   elif recoveryMode == False and skipCheck == True:
-    print("Comments " + actionPast + "!                                                   \n")
+    print("Comments " + actionPast + "!                                                   \n") # fmt: skip
   elif recoveryMode == True:
-    print("Comments Recovered! Will now verify each is back.                          \n")
+    print("Comments Recovered! Will now verify each is back.                          \n") # fmt: skip
 
   return failedComments
 
@@ -1125,10 +1125,10 @@ def check_deleted_comments(commentInput):
       commentList = list(commentInput.keys())
       
     # Wait 2 seconds so YouTube API has time to update comment status
-    print(" Preparing to check deletion status...", end="\r")
+    print(" Preparing to check deletion status...", end="\r") # fmt: skip
     time.sleep(1)
-    print("                                                      ")
-    print("    (Note: You can disable deletion success checking in the config file, to save time and API quota)\n")
+    print("                                                      ") # fmt: skip
+    print("    (Note: You can disable deletion success checking in the config file, to save time and API quota)\n") # fmt: skip
     for commentID in commentList:
       try:
         results = auth.YOUTUBE.comments().list(
@@ -1139,7 +1139,7 @@ def check_deleted_comments(commentInput):
           textFormat="plainText"
         ).execute()
 
-        print("Verifying Deleted Comments: [" + str(j) + " / " + str(total) + "]", end="\r")
+        print("Verifying Deleted Comments: [" + str(j) + " / " + str(total) + "]", end="\r") # fmt: skip
         j += 1
 
         if results["items"]:  # Check if the items result is empty
@@ -1148,9 +1148,9 @@ def check_deleted_comments(commentInput):
       # If comment is found and possibly not deleted, print out video ID and comment ID
       except CommentFoundError:
         if type(commentInput) == dict:
-          print("Possible Issue Deleting Comment: " + str(commentID) + " |  Check Here: " + "https://www.youtube.com/watch?v=" + str(commentInput[commentID]['videoID']) + "&lc=" + str(commentID))
+          print("Possible Issue Deleting Comment: " + str(commentID) + " |  Check Here: " + "https://www.youtube.com/watch?v=" + str(commentInput[commentID]['videoID']) + "&lc=" + str(commentID)) # fmt: skip
         elif type(commentInput) == list:
-          print("Possible Issue Deleting Comment: " + str(commentID))
+          print("Possible Issue Deleting Comment: " + str(commentID)) # fmt: skip
         i += 1
         pass
       except HttpError as hx:
@@ -1159,25 +1159,25 @@ def check_deleted_comments(commentInput):
         except:
           reason = "Not Given"
         if type(commentInput) == dict:
-          print(f"HttpError '{reason}' While Deleting Comment: " + str(commentID) + " |  Check Here: " + "https://www.youtube.com/watch?v=" + str(commentInput[commentID]['videoID']) + "&lc=" + str(commentID))
+          print(f"HttpError '{reason}' While Deleting Comment: " + str(commentID) + " |  Check Here: " + "https://www.youtube.com/watch?v=" + str(commentInput[commentID]['videoID']) + "&lc=" + str(commentID)) # fmt: skip
         elif type(commentInput) == list:
-          print(f"HttpError '{reason}' While Deleting Comment: " + str(commentID))
+          print(f"HttpError '{reason}' While Deleting Comment: " + str(commentID)) # fmt: skip
         i += 1
         pass
       except Exception:
         if type(commentInput) == dict:
-          print("Unhandled Exception While Deleting Comment: " + str(commentID) + " |  Check Here: " + "https://www.youtube.com/watch?v=" + str(commentInput[commentID]['videoID']) + "&lc=" + str(commentID))
+          print("Unhandled Exception While Deleting Comment: " + str(commentID) + " |  Check Here: " + "https://www.youtube.com/watch?v=" + str(commentInput[commentID]['videoID']) + "&lc=" + str(commentID)) # fmt: skip
         elif type(commentInput) == list:
-          print("Unhandled Exception While Deleting Comment: " + str(commentID))
+          print("Unhandled Exception While Deleting Comment: " + str(commentID)) # fmt: skip
         i += 1
         pass
 
     if i == 0:
-      print("\n\nSuccess: All comments should be gone.")
+      print("\n\nSuccess: All comments should be gone.") # fmt: skip
     elif i > 0:
-      print("\n\nWarning: " + str(i) + " comments may remain. Check links above or try running the program again. An error log file has been created: 'Deletion_Error_Log.txt'")
+      print("\n\nWarning: " + str(i) + " comments may remain. Check links above or try running the program again. An error log file has been created: 'Deletion_Error_Log.txt'") # fmt: skip
     else:
-      print("\n\nSomething strange happened... The comments may or may have not been deleted.")
+      print("\n\nSomething strange happened... The comments may or may have not been deleted.") # fmt: skip
 
     return None
 
@@ -1200,7 +1200,7 @@ def check_recovered_comments(commentsList):
         fields="items",
         textFormat="plainText"
       ).execute()
-      print("Verifying Deleted Comments: [" + str(j) + " / " + str(total) + "]", end="\r")
+      print("Verifying Deleted Comments: [" + str(j) + " / " + str(total) + "]", end="\r") # fmt: skip
       j += 1
 
       if not results["items"]:  # Check if the items result is empty
@@ -1208,19 +1208,19 @@ def check_recovered_comments(commentsList):
 
     except CommentNotFoundError:
       #print("Possible Issue Deleting Comment: " + str(key) + " |  Check Here: " + "https://www.youtube.com/watch?v=" + str(value) + "&lc=" + str(key))
-      print("Possible Issue Restoring Comment: " + str(comment))
+      print("Possible Issue Restoring Comment: " + str(comment)) # fmt: skip
       i += 1
       unsuccessfulResults.append(comment)
   
   if i == 0:
-      print(f"\n\n{F.LIGHTGREEN_EX}Success: All spam comments should be restored!{S.R}")
-      print("You can view them by using the links to them in the same log file you used.")
+      print(f"\n\n{F.LIGHTGREEN_EX}Success: All spam comments should be restored!{S.R}") # fmt: skip
+      print("You can view them by using the links to them in the same log file you used.") # fmt: skip
 
   elif i > 0:
-    print("\n\nWarning: " + str(i) + " comments may have not been restored. See above list.")
-    print("Use the links to the comments from the log file you used, to verify if they are back or not.")
+    print("\n\nWarning: " + str(i) + " comments may have not been restored. See above list.") # fmt: skip
+    print("Use the links to the comments from the log file you used, to verify if they are back or not.") # fmt: skip
 
-  input("\nRecovery process finished. Press Enter to return to main menu...")
+  input("\nRecovery process finished. Press Enter to return to main menu...") # fmt: skip
   return True
 
 # Removes comments by user-selected authors from list of comments to delete
@@ -1248,11 +1248,11 @@ def exclude_authors(current, config, miscData, excludedCommentsDict, authorsToEx
     result = result.replace(" ", "")
     validInputExpression = r'^[0-9,-]+$' # Ensures only digits, commas, and dashes are used
     if re.match(validInputExpression, result) == None:
-      print(f"\n{F.LIGHTRED_EX}Invalid input!{S.R} Must be a comma separated list of numbers and/or range of numbers. Please try again.")
+      print(f"\n{F.LIGHTRED_EX}Invalid input!{S.R} Must be a comma separated list of numbers and/or range of numbers. Please try again.") # fmt: skip
       if only == False:
-        inputtedString = input("\nEnter the list of authors to exclude from deletion: ")
+        inputtedString = input("\nEnter the list of authors to exclude from deletion: ") # fmt: skip
       elif only == True:
-        inputtedString = input("\nEnter the list of only authors to delete: ")
+        inputtedString = input("\nEnter the list of only authors to delete: ") # fmt: skip
       
     else:
       result = result.strip(',') # Remove leading/trailing comma
@@ -1261,14 +1261,14 @@ def exclude_authors(current, config, miscData, excludedCommentsDict, authorsToEx
       valid = True
       for num in chosenSampleIndexes: # Check if any numbers outside max range
         if int(num) > len(current.matchSamplesDict) or int(num)<1:
-          print(f"\n{F.LIGHTRED_EX}Invalid input!{S.R} Number is outside the range of samples: {num} --  Please try again.")
+          print(f"\n{F.LIGHTRED_EX}Invalid input!{S.R} Number is outside the range of samples: {num} --  Please try again.") # fmt: skip
           valid = False
           break
       if valid == False:
         if only == False:
-          inputtedString = input("\nEnter the comma separated list of numbers and/or ranges to exclude: ")
+          inputtedString = input("\nEnter the comma separated list of numbers and/or ranges to exclude: ") # fmt: skip
         elif only == True:
-          inputtedString = input("\nEnter the comma separated list of numbers and/or ranges to delete: ")
+          inputtedString = input("\nEnter the comma separated list of numbers and/or ranges to delete: ") # fmt: skip
 
   # Go through all the sample numbers, check if they are on the list given by user
   for authorID, info in current.matchSamplesDict.items():
@@ -1325,10 +1325,10 @@ def exclude_authors(current, config, miscData, excludedCommentsDict, authorsToEx
   # Verify removal
   for comment in current.matchedCommentsDict.keys():
     if comment in commentIDExcludeSet:
-      print(f"{F.LIGHTRED_EX}FATAL ERROR{S.R}: Something went wrong while trying to exclude comments. No comments have been deleted.")
-      print(f"You should {F.YELLOW}DEFINITELY{S.R} report this bug here: https://github.com/ThioJoe/YT-Spammer-Purge/issues")
-      print("Provide the error code: X-1")
-      input("Press Enter to Exit...")
+      print(f"{F.LIGHTRED_EX}FATAL ERROR{S.R}: Something went wrong while trying to exclude comments. No comments have been deleted.") # fmt: skip
+      print(f"You should {F.YELLOW}DEFINITELY{S.R} report this bug here: https://github.com/ThioJoe/YT-Spammer-Purge/issues") # fmt: skip
+      print("Provide the error code: X-1") # fmt: skip
+      input("Press Enter to Exit...") # fmt: skip
       sys.exit()
 
   # Get author names and IDs from dictionary, and display them
@@ -1336,11 +1336,11 @@ def exclude_authors(current, config, miscData, excludedCommentsDict, authorsToEx
     displayString += f"    User ID: {author}   |   User Name: {current.matchSamplesDict[author]['authorName']}\n"
 
 
-  print(f"\n{F.CYAN}All {len(excludedCommentsDict)} comments{S.R} from the {F.CYAN}following users{S.R} are now {F.LIGHTGREEN_EX}excluded{S.R} from deletion:")
-  print(displayString)
+  print(f"\n{F.CYAN}All {len(excludedCommentsDict)} comments{S.R} from the {F.CYAN}following users{S.R} are now {F.LIGHTGREEN_EX}excluded{S.R} from deletion:") # fmt: skip
+  print(displayString) # fmt: skip
 
   if config['whitelist_excluded'] == 'ask':
-    print(f"\nAdd these {F.LIGHTGREEN_EX}excluded{S.R} users to the {F.LIGHTGREEN_EX}whitelist{S.R} for future scans?")
+    print(f"\nAdd these {F.LIGHTGREEN_EX}excluded{S.R} users to the {F.LIGHTGREEN_EX}whitelist{S.R} for future scans?") # fmt: skip
     addWhitelist = choice("Whitelist Users?")
   elif config['whitelist_excluded'] == True:
     addWhitelist = True
@@ -1353,10 +1353,10 @@ def exclude_authors(current, config, miscData, excludedCommentsDict, authorsToEx
       currentWhitelist = f.read()
       for author in authorsToExcludeSet:
         if not author in currentWhitelist:
-          f.write(f"\n# [Excluded]  Channel Name: {current.matchSamplesDict[author]['authorName']}  |  Channel ID: " + "\n")
-          f.write(f"{author}\n")
+          f.write(f"\n# [Excluded]  Channel Name: {current.matchSamplesDict[author]['authorName']}  |  Channel ID: " + "\n") # fmt: skip
+          f.write(f"{author}\n") # fmt: skip
   
-  input("\nPress Enter to decide what to do with the rest...")
+  input("\nPress Enter to decide what to do with the rest...") # fmt: skip
   
   return current, excludedCommentsDict, authorsToExcludeSet, commentIDExcludeSet, rtfFormattedExcludes, plaintextFormattedExcludes # May use excludedCommentsDict later for printing them to log file
 
@@ -1381,7 +1381,7 @@ def get_recent_videos(current, channel_id, numVideosTotal):
       commentCount = validation.validate_video_id(videoID, pass_exception = True)[3]
       #Skips over video if comment count is zero, or comments disabled / is live stream
       if str(commentCount) == '0':
-        print(f"{B.YELLOW}{F.BLACK} Skipping {S.R} {F.LIGHTRED_EX}Video with no comments:{S.R} " + str(item['snippet']['title']))
+        print(f"{B.YELLOW}{F.BLACK} Skipping {S.R} {F.LIGHTRED_EX}Video with no comments:{S.R} " + str(item['snippet']['title'])) # fmt: skip
         k+=1
         continue
       
@@ -1417,7 +1417,7 @@ def get_recent_videos(current, channel_id, numVideosTotal):
       return "MainMenu"
   else:
     while nextPageToken != "End" and k < numVideosTotal and str(abortCheck) != "MainMenu":
-      print("Retrieved " + str(len(recentVideos)) + "/" + str(numVideosTotal) + " videos.", end="\r")
+      print("Retrieved " + str(len(recentVideos)) + "/" + str(numVideosTotal) + " videos.", end="\r") # fmt: skip
       remainingVideos = numVideosTotal - k
       if remainingVideos <= 50:
         nextPageToken, j, k, abortCheck = get_block_of_videos(nextPageToken, j, k, numVideosBlock = remainingVideos)
@@ -1425,7 +1425,7 @@ def get_recent_videos(current, channel_id, numVideosTotal):
         nextPageToken, j, k, abortCheck = get_block_of_videos(nextPageToken, j, k, numVideosBlock = 50)
       if str(nextPageToken[0]) == "MainMenu":
         return "MainMenu"
-  print("                                          ")
+  print("                                          ") # fmt: skip
   return recentVideos
 
 ##################################### PRINT STATS ##########################################
@@ -1446,8 +1446,8 @@ def print_count_stats(current, miscData, videosToScan, final):
   matchCount = str(len(current.matchedCommentsDict) + len(current.spamThreadsDict))
 
   if final == True:
-    print(f" {progress} Comments Scanned: {F.YELLOW}{comScanned}{S.R} | Replies Scanned: {F.YELLOW}{repScanned}{S.R} | Matches Found So Far: {F.LIGHTRED_EX}{matchCount}{S.R}\n")
+    print(f" {progress} Comments Scanned: {F.YELLOW}{comScanned}{S.R} | Replies Scanned: {F.YELLOW}{repScanned}{S.R} | Matches Found So Far: {F.LIGHTRED_EX}{matchCount}{S.R}\n") # fmt: skip
   else:
-    print(f" {progress} Comments Scanned: {F.YELLOW}{comScanned}{S.R} | Replies Scanned: {F.YELLOW}{repScanned}{S.R} | Matches Found So Far: {F.LIGHTRED_EX}{matchCount}{S.R}", end = "\r")
+    print(f" {progress} Comments Scanned: {F.YELLOW}{comScanned}{S.R} | Replies Scanned: {F.YELLOW}{repScanned}{S.R} | Matches Found So Far: {F.LIGHTRED_EX}{matchCount}{S.R}", end = "\r") # fmt: skip
   
   return None

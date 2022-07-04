@@ -80,7 +80,7 @@ def rClicker(e):
         rmenu.tk_popup(e.x_root+40, e.y_root+10,entry="0")
 
     except TclError:
-        print(' - rClick menu, something wrong')
+        print(' - rClick menu, something wrong') # fmt: skip
         pass
 
     return "break"
@@ -91,7 +91,7 @@ def rClickbinder(r):
             r.bind_class(b, sequence='<Button-3>',
                         func=rClicker, add='')
     except TclError:
-        print(' - rClickbinder, something wrong')
+        print(' - rClickbinder, something wrong') # fmt: skip
         pass
 
 ###################### Main Window ############################

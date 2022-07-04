@@ -119,7 +119,7 @@ def download_comments(youtube_id, sort_by=SORT_BY_RECENT, language=None, sleep=.
     renderer = next(search_dict(section, 'continuationItemRenderer'), None) if section else None
     if not renderer:
         # Comments disabled?
-        print("\nError: 'continuationItemRenderer' not found in page data. Are comments disabled?")
+        print("\nError: 'continuationItemRenderer' not found in page data. Are comments disabled?") # fmt: skip
         return
 
     needs_sorting = sort_by != SORT_BY_POPULAR
@@ -207,12 +207,12 @@ def main(communityPostID=None, limit=1000, sort=SORT_BY_RECENT, language=None, p
     if postScanProgressDict:
         i = postScanProgressDict['scanned']
         j = postScanProgressDict['total']
-        print(f'\n\n [{i}/{j}] Post ID: {communityPostID}')
+        print(f'\n\n [{i}/{j}] Post ID: {communityPostID}') # fmt: skip
     else:
-        print(f'\n Loading Comments For Post: {communityPostID}')
+        print(f'\n Loading Comments For Post: {communityPostID}') # fmt: skip
 
     if postText:
-            print(f"    >  {F.LIGHTCYAN_EX}Post Text Sample:{S.R} {postText[0:90]}")
+            print(f"    >  {F.LIGHTCYAN_EX}Post Text Sample:{S.R} {postText[0:90]}") # fmt: skip
 
     count = 0
     #print(f'    >  Loaded {F.YELLOW}{count}{S.R} comment(s)', end='\r')
@@ -236,15 +236,15 @@ def main(communityPostID=None, limit=1000, sort=SORT_BY_RECENT, language=None, p
         if totalComments >= 0:
             percent = ((count / totalComments) * 100)
             progressStats = f"[ {str(count)} / {str(totalComments)} ]".ljust(15, " ") + f" ({percent:.2f}%)"
-            print(f'    >  Retrieving Post Comments - {progressStats}', end='\r')
+            print(f'    >  Retrieving Post Comments - {progressStats}', end='\r') # fmt: skip
         else: 
-            print(f'    >  Loaded {F.YELLOW}{count}{S.R} comment(s)', end='\r')
+            print(f'    >  Loaded {F.YELLOW}{count}{S.R} comment(s)', end='\r') # fmt: skip
 
         if limit and count >= limit:
-            print("                                                                                 ")
+            print("                                                                                 ") # fmt: skip
             break
 
-    print("                                                                                 ")
+    print("                                                                                 ") # fmt: skip
     return commentsDict
 
 

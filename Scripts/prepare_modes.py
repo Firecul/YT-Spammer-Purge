@@ -28,14 +28,14 @@ def prepare_filter_mode_chars(scanMode, filterMode, config):
     whatToScanMsg = "Usernames and Comment Text"
 
   if config['characters_to_filter'] != "ask":
-    print("Characters to filter obtained from config file.")
+    print("Characters to filter obtained from config file.") # fmt: skip
     pass
   else:
-    print(f"\nNext, you will input {F.YELLOW}ONLY{S.R} any special characters / emojis you want to search for in all {whatToScanMsg}. Do not include commas or spaces!")
-    print("          Note: Letters, numbers, and basic punctuation will not be included for safety purposes, even if you enter them.")
-    print("          Example: 👋🔥✔️✨")
-    input(f"\nPress {F.LIGHTGREEN_EX}Enter{S.R} to open the {F.LIGHTGREEN_EX}text entry window{S.R}...")
-    print("-------------------------------------------")
+    print(f"\nNext, you will input {F.YELLOW}ONLY{S.R} any special characters / emojis you want to search for in all {whatToScanMsg}. Do not include commas or spaces!") # fmt: skip
+    print("          Note: Letters, numbers, and basic punctuation will not be included for safety purposes, even if you enter them.") # fmt: skip
+    print("          Example: 👋🔥✔️✨") # fmt: skip
+    input(f"\nPress {F.LIGHTGREEN_EX}Enter{S.R} to open the {F.LIGHTGREEN_EX}text entry window{S.R}...") # fmt: skip
+    print("-------------------------------------------") # fmt: skip
 
   confirm = False
   validConfigSetting = True
@@ -45,18 +45,18 @@ def prepare_filter_mode_chars(scanMode, filterMode, config):
       bypass = True
     else:
       bypass = False
-      print(f"\nWaiting for input Window. Press {F.MAGENTA}'Execute'{S.R} after entering valid characters to continue...", end="\r")
+      print(f"\nWaiting for input Window. Press {F.MAGENTA}'Execute'{S.R} after entering valid characters to continue...", end="\r") # fmt: skip
       try:
         # Takes in user input of characters, returns 'set' of characters stripped of specified characters
         inputChars = take_input_gui(mode="chars", stripLettersNumbers=True, stripKeyboardSpecialChars=False, stripPunctuation=True)
       except NameError: # Catch if user closes GUI window, exit program.
-        print("                                                                                          ") # Clears the line because of \r on previous print
-        print("\nError Code G-1: Something went wrong with the input, or you closed the window improperly.")
-        print("If this keeps happening inexplicably, consider filing a bug report here: https://github.com/ThioJoe/YT-Spammer-Purge/issues")
-        input("Press Enter to exit...")
+        print("                                                                                          ")  # fmt: skip# Clears the line because of \r on previous print
+        print("\nError Code G-1: Something went wrong with the input, or you closed the window improperly.") # fmt: skip
+        print("If this keeps happening inexplicably, consider filing a bug report here: https://github.com/ThioJoe/YT-Spammer-Purge/issues") # fmt: skip
+        input("Press Enter to exit...") # fmt: skip
         sys.exit()
 
-    print(f"     {whatToScanMsg} will be scanned for {F.MAGENTA}ANY{S.R} of the characters you entered in the previous window.")
+    print(f"     {whatToScanMsg} will be scanned for {F.MAGENTA}ANY{S.R} of the characters you entered in the previous window.") # fmt: skip
     userChoice = choice("Begin Scanning? ", bypass)
     if userChoice == True:
       confirm = True
@@ -78,12 +78,12 @@ def prepare_filter_mode_strings(scanMode, filterMode, config):
     whatToScanMsg = "Usernames and Comment Text"
 
   if config['strings_to_filter'] != "ask":
-    print("Strings to filter obtained from config file.")
+    print("Strings to filter obtained from config file.") # fmt: skip
     pass
   else:
-    print(f"\nPaste or type in a list of any {F.YELLOW}comma separated strings{S.R} you want to search for in {whatToScanMsg}. (Not case sensitive)")
-    print("   >Note: If the text you paste includes special characters or emojis, they might not display correctly here, but it WILL still search them fine.")
-    print("          Example Input: whatsapp, whatever multiple words, investment")
+    print(f"\nPaste or type in a list of any {F.YELLOW}comma separated strings{S.R} you want to search for in {whatToScanMsg}. (Not case sensitive)") # fmt: skip
+    print("   >Note: If the text you paste includes special characters or emojis, they might not display correctly here, but it WILL still search them fine.") # fmt: skip
+    print("          Example Input: whatsapp, whatever multiple words, investment") # fmt: skip
 
   validEntry = False
   validConfigSetting = True
@@ -93,7 +93,7 @@ def prepare_filter_mode_strings(scanMode, filterMode, config):
       bypass = True
     else:
       bypass = False
-      inputString = input("Input Here: ")
+      inputString = input("Input Here: ") # fmt: skip
       if str(inputString).lower() == "x":
         return "MainMenu", None
 
@@ -108,8 +108,8 @@ def prepare_filter_mode_strings(scanMode, filterMode, config):
       if config['strings_to_filter'] != "ask":
         pass
       else:
-        print(f"     {whatToScanMsg} will be scanned for {F.MAGENTA}ANY{S.R} of the following strings:")
-        print(filterStringList)
+        print(f"     {whatToScanMsg} will be scanned for {F.MAGENTA}ANY{S.R} of the following strings:") # fmt: skip
+        print(filterStringList) # fmt: skip
       userChoice = choice("Begin scanning? ", bypass)
       if userChoice == True:
         validEntry = True
@@ -130,11 +130,11 @@ def prepare_filter_mode_regex(scanMode, filterMode, config):
     whatToScanMsg = "Usernames and Comment Text"
 
   if config['regex_to_filter'] != "ask":
-    print("Regex expression obtained from config file.")
+    print("Regex expression obtained from config file.") # fmt: skip
     validConfigSetting = True
   else:
-    print(f"Enter any {F.YELLOW}regex expression{S.R} to search within {whatToScanMsg}.")
-    print(r"          Example Input:  [^\x00-\xFF]")
+    print(f"Enter any {F.YELLOW}regex expression{S.R} to search within {whatToScanMsg}.") # fmt: skip
+    print(r"          Example Input:  [^\x00-\xFF]") # fmt: skip
     validConfigSetting = False
   validExpression = False
 
@@ -143,7 +143,7 @@ def prepare_filter_mode_regex(scanMode, filterMode, config):
       inputtedExpression = config['regex_to_filter']
       bypass = True
     else:
-      inputtedExpression = input("Input Expression Here:  ")
+      inputtedExpression = input("Input Expression Here:  ") # fmt: skip
       if str(inputtedExpression).lower() == "x":
         return "MainMenu", None
       bypass = False
@@ -153,7 +153,7 @@ def prepare_filter_mode_regex(scanMode, filterMode, config):
 
     if validExpression == True:
       processedExpression = validationResults[1]
-      print(f"     The expression appears to be {F.GREEN}valid{S.R}!")
+      print(f"     The expression appears to be {F.GREEN}valid{S.R}!") # fmt: skip
 
       if validExpression == True:
         userChoice = choice("Begin scanning? ", bypass)
@@ -165,7 +165,7 @@ def prepare_filter_mode_regex(scanMode, filterMode, config):
         elif userChoice == None:
           return "MainMenu", None
     else:
-      print(f"     {F.RED}Error{S.R}: The expression appears to be {F.RED}invalid{S.R}!")
+      print(f"     {F.RED}Error{S.R}: The expression appears to be {F.RED}invalid{S.R}!") # fmt: skip
       validConfigSetting = False
 
   return processedExpression, None
@@ -181,7 +181,7 @@ def prepare_filter_mode_ID(scanMode, config):
       bypass = True
     else:
       bypass = False
-      inputtedSpammerChannelID = input(f"Enter the {F.LIGHTRED_EX} Channel link(s) or ID(s){S.R} of the spammer (comma separated): ")
+      inputtedSpammerChannelID = input(f"Enter the {F.LIGHTRED_EX} Channel link(s) or ID(s){S.R} of the spammer (comma separated): ") # fmt: skip
       if str(inputtedSpammerChannelID).lower() == "x":
         return "MainMenu", None
 
@@ -190,31 +190,31 @@ def prepare_filter_mode_ID(scanMode, config):
       inputtedSpammerChannelID = processResult[1] # After processing, if valid, inputtedSpammerChannelID is a list of channel IDs
     else:
       validConfigSetting = False
-  print("\n")
+  print("\n") # fmt: skip
 
   # Check if spammer ID and user's channel ID are the same, and warn
   # If using channel-wide scanning mode, program will just ignore those comments
   if any(auth.CURRENTUSER.id == i for i in inputtedSpammerChannelID):
-    print(f"{B.RED}{F.WHITE} WARNING: {S.R} - You entered your own channel ID!")
-    print(f"For safety purposes, this program always {F.YELLOW}ignores{S.R} your own comments.")
+    print(f"{B.RED}{F.WHITE} WARNING: {S.R} - You entered your own channel ID!") # fmt: skip
+    print(f"For safety purposes, this program always {F.YELLOW}ignores{S.R} your own comments.") # fmt: skip
 
     if config['channel_ids_to_filter'] != "ask":
       pass
     else:
-      input("\nPress Enter to continue...")
+      input("\nPress Enter to continue...") # fmt: skip
 
   return inputtedSpammerChannelID, None
 
 # For Filter mode auto-ascii, user inputs nothing, program scans for non-ascii
 def prepare_filter_mode_non_ascii(scanMode, config):
 
-  print("\n-------------------------------------------------- ASCII Mode--------------------------------------------------")
-  print("~~~ This mode automatically searches for usernames that contain special characters (aka not letters/numbers) ~~~\n")
-  print("Choose the sensitivity level of the filter. You will be shown examples after you choose.")
-  print(f"   1. Allow {F.LIGHTMAGENTA_EX}Standard + Extended ASCII{S.R}:    Filter rare unicode & Emojis only")
-  print(f"   2. Allow {F.LIGHTMAGENTA_EX}Standard ASCII only{S.R}:  Also filter semi-common foreign characters")
-  print(f"   3. {F.LIGHTRED_EX}NUKE Mode (┘°□°)┘≈ ┴──┴ :    Allow ONLY numbers, letters, and spaces{S.R}")
-  print("")
+  print("\n-------------------------------------------------- ASCII Mode--------------------------------------------------") # fmt: skip
+  print("~~~ This mode automatically searches for usernames that contain special characters (aka not letters/numbers) ~~~\n") # fmt: skip
+  print("Choose the sensitivity level of the filter. You will be shown examples after you choose.") # fmt: skip
+  print(f"   1. Allow {F.LIGHTMAGENTA_EX}Standard + Extended ASCII{S.R}:    Filter rare unicode & Emojis only") # fmt: skip
+  print(f"   2. Allow {F.LIGHTMAGENTA_EX}Standard ASCII only{S.R}:  Also filter semi-common foreign characters") # fmt: skip
+  print(f"   3. {F.LIGHTRED_EX}NUKE Mode (┘°□°)┘≈ ┴──┴ :    Allow ONLY numbers, letters, and spaces{S.R}") # fmt: skip
+  print("") # fmt: skip
 
   # Get user input for mode selection,
   confirmation = False
@@ -225,11 +225,11 @@ def prepare_filter_mode_non_ascii(scanMode, config):
       bypass = True
     else:
       bypass = False
-      selection = input("Choose Mode: ")
+      selection = input("Choose Mode: ") # fmt: skip
       if str(selection).lower() == "x":
         return "MainMenu", None
     if selection == "1":
-      print(f"Searches for {F.YELLOW}usernames with emojis, unicode symbols, and rare foreign characters{S.R} such as: ✔️ ☝️ 🡆 ▲ π Ɲ Œ")
+      print(f"Searches for {F.YELLOW}usernames with emojis, unicode symbols, and rare foreign characters{S.R} such as: ✔️ ☝️ 🡆 ▲ π Ɲ Œ") # fmt: skip
       userChoice = choice("Choose this mode?", bypass)
       if userChoice == True:
         regexPattern = r"[^\x00-\xFF]"
@@ -237,7 +237,7 @@ def prepare_filter_mode_non_ascii(scanMode, config):
       elif userChoice == None:
         return "MainMenu", None
     elif selection == "2":
-      print(f"Searches for {F.YELLOW}usernames with anything EXCEPT{S.R} the following: {F.YELLOW}Letters, numbers, punctuation, and common special characters{S.R} you can type with your keyboard like: % * & () + ")
+      print(f"Searches for {F.YELLOW}usernames with anything EXCEPT{S.R} the following: {F.YELLOW}Letters, numbers, punctuation, and common special characters{S.R} you can type with your keyboard like: % * & () + ") # fmt: skip
       userChoice = choice("Choose this mode?", bypass)
       if userChoice == True:
         regexPattern = r"[^\x00-\x7F]"
@@ -245,7 +245,7 @@ def prepare_filter_mode_non_ascii(scanMode, config):
       elif userChoice == None:
         return "MainMenu", None
     elif selection == "3":
-      print(f"Searches for {F.YELLOW}usernames with anything EXCEPT letters, numbers, and spaces{S.R} - {B.RED}{F.WHITE} EXTREMELY LIKELY to cause collateral damage!{S.R} Recommended to just use to manually gather list of spammer IDs, then use a different mode to delete.")
+      print(f"Searches for {F.YELLOW}usernames with anything EXCEPT letters, numbers, and spaces{S.R} - {B.RED}{F.WHITE} EXTREMELY LIKELY to cause collateral damage!{S.R} Recommended to just use to manually gather list of spammer IDs, then use a different mode to delete.") # fmt: skip
       userChoice = choice("Choose this mode?", bypass)
       if userChoice == True:
         regexPattern = r"[^a-zA-Z0-9 ]"
@@ -253,7 +253,7 @@ def prepare_filter_mode_non_ascii(scanMode, config):
       elif userChoice == None:
         return "MainMenu", None
     else:
-      print(f"Invalid input: {selection} - Must be 1, 2, or 3.")
+      print(f"Invalid input: {selection} - Must be 1, 2, or 3.") # fmt: skip
       validConfigSetting = False
 
   if selection == "1":
@@ -266,7 +266,7 @@ def prepare_filter_mode_non_ascii(scanMode, config):
   if confirmation == True:
     return regexPattern, autoModeName
   else:
-    input("How did you get here? Something very strange went wrong. Press Enter to Exit...")
+    input("How did you get here? Something very strange went wrong. Press Enter to Exit...") # fmt: skip
     sys.exit()
 
 # Auto smart mode
@@ -280,20 +280,20 @@ def prepare_filter_mode_smart(scanMode, config, miscData, sensitive=False):
     pass
   else:
     if sensitive:
-      print("\n----------------------------------------------- Sensitive-Smart Mode -----------------------------------------------")
+      print("\n----------------------------------------------- Sensitive-Smart Mode -----------------------------------------------") # fmt: skip
     else: # if not sensitive
-      print("\n----------------------------------------------- Auto-Smart Mode -----------------------------------------------")
-    print(f"~~~ This mode is a {F.LIGHTCYAN_EX}spammer's worst nightmare{S.R}. It automatically scans for multiple spammer techniques ~~~\n")
-    print(" > Extremely low (near 0%) false positives")
-    print(" > Detects whatsapp scammers and '18+ spam' bots")
-    print(" > Easily cuts through look-alike characters and obfuscations, including impersonating usernames")
+      print("\n----------------------------------------------- Auto-Smart Mode -----------------------------------------------") # fmt: skip
+    print(f"~~~ This mode is a {F.LIGHTCYAN_EX}spammer's worst nightmare{S.R}. It automatically scans for multiple spammer techniques ~~~\n") # fmt: skip
+    print(" > Extremely low (near 0%) false positives") # fmt: skip
+    print(" > Detects whatsapp scammers and '18+ spam' bots") # fmt: skip
+    print(" > Easily cuts through look-alike characters and obfuscations, including impersonating usernames") # fmt: skip
     if sensitive == False:
-      print(f" > {F.LIGHTRED_EX}NOTE:{S.R} This mode prioritizes a {F.LIGHTGREEN_EX}VERY low false positive rate{S.R}, at the cost of occasionally missing some spammers.\n")
+      print(f" > {F.LIGHTRED_EX}NOTE:{S.R} This mode prioritizes a {F.LIGHTGREEN_EX}VERY low false positive rate{S.R}, at the cost of occasionally missing some spammers.\n") # fmt: skip
     elif sensitive == True:
-      print(f" > {F.LIGHTRED_EX}NOTE:{S.R} In sensitive mode, {F.LIGHTRED_EX}expect more false positives{S.R}. Recommended to run this AFTER regular Auto Smart Mode.\n")
-    input("Press Enter to Begin Scanning...")
+      print(f" > {F.LIGHTRED_EX}NOTE:{S.R} In sensitive mode, {F.LIGHTRED_EX}expect more false positives{S.R}. Recommended to run this AFTER regular Auto Smart Mode.\n") # fmt: skip
+    input("Press Enter to Begin Scanning...") # fmt: skip
     print ("\033[A                                     \033[A") # Erases previous line
-  print("  Loading Filters  [                              ]", end="\r")
+  print("  Loading Filters  [                              ]", end="\r") # fmt: skip
 
   # Create Variables
   compiledRegexDict = {
@@ -366,7 +366,7 @@ def prepare_filter_mode_smart(scanMode, config, miscData, sensitive=False):
     'cashRegex': cashRegex,
   }
 
-  print("  Loading Filters  [======                        ]", end="\r")
+  print("  Loading Filters  [======                        ]", end="\r") # fmt: skip
 
   # Compile regex with upper case, otherwise many false positive character matches
   bufferChars = r"*_~|`[]()'-.•,"
@@ -377,7 +377,7 @@ def prepare_filter_mode_smart(scanMode, config, miscData, sensitive=False):
   a = addBuffers
   
 
-  print("  Loading Filters  [==============                ]", end="\r")
+  print("  Loading Filters  [==============                ]", end="\r") # fmt: skip
 
   # Prepare All-domain Regex Expression
   prepString = "\.("
@@ -392,7 +392,7 @@ def prepare_filter_mode_smart(scanMode, config, miscData, sensitive=False):
   prepString = prepString + ")\/"
   rootDomainRegex = re.compile(prepString)
   sensitiveRootDomainRegex = re.compile(sensitivePrepString)
-  print("  Loading Filters  [===================           ]", end="\r")
+  print("  Loading Filters  [===================           ]", end="\r") # fmt: skip
 
   spamListExpressionsList = []
   # Prepare spam domain regex
@@ -402,7 +402,7 @@ def prepare_filter_mode_smart(scanMode, config, miscData, sensitive=False):
     spamListExpressionsList.append(confusable_regex(account.upper(), include_character_padding=True).replace(m, a))
   # for thread in spamThreadsList:
   #   spamListExpressionsList.append(confusable_regex(thread.upper(), include_character_padding=True).replace(m, a))
-  print("  Loading Filters  [======================        ]", end="\r")
+  print("  Loading Filters  [======================        ]", end="\r") # fmt: skip
   spamListCombinedRegex = re.compile('|'.join(spamListExpressionsList))
 
   # Prepare Multi Language Detection
@@ -413,7 +413,7 @@ def prepare_filter_mode_smart(scanMode, config, miscData, sensitive=False):
   languages = [['turkish', turkish, []], ['germanic', germanic, []], ['cyrillic', cyrillic, []], ['japanese', japanese, []]]
   for item in languages:
     item[2] = make_char_set(item[1])
-  print("  Loading Filters  [============================  ]", end="\r")
+  print("  Loading Filters  [============================  ]", end="\r") # fmt: skip
 
 
   filterSettings = {
@@ -441,7 +441,7 @@ def prepare_filter_mode_smart(scanMode, config, miscData, sensitive=False):
     'spamListCombinedRegex': spamListCombinedRegex,
     'threadFiltersDict': threadFiltersDict
     }
-  print("                                                                 ") # Erases line that says "loading filters"
+  print("                                                                 ")  # fmt: skip# Erases line that says "loading filters"
 
   return filterSettings, None
 
@@ -454,10 +454,10 @@ def prepare_filter_mode_smart(scanMode, config, miscData, sensitive=False):
 
 ################################ RECOVERY MODE ###########################################
 def recover_deleted_comments(config):
-  print(f"\n\n-------------------- {F.LIGHTGREEN_EX}Comment Recovery Mode{S.R} --------------------\n")
-  print("> Believe it or not, the YouTube API actually allows you to re-instate \"deleted\" comments.")
-  print(f"> This is {F.YELLOW}only possible if you have stored the comment IDs{S.R} of the deleted comments, \n   such as {F.YELLOW}having kept the log file{S.R} of that session.")
-  print("> If you don't have the comment IDs you can't recover the comments, and there is no way to find them. \n")
+  print(f"\n\n-------------------- {F.LIGHTGREEN_EX}Comment Recovery Mode{S.R} --------------------\n") # fmt: skip
+  print("> Believe it or not, the YouTube API actually allows you to re-instate \"deleted\" comments.") # fmt: skip
+  print(f"> This is {F.YELLOW}only possible if you have stored the comment IDs{S.R} of the deleted comments, \n   such as {F.YELLOW}having kept the log file{S.R} of that session.") # fmt: skip
+  print("> If you don't have the comment IDs you can't recover the comments, and there is no way to find them. \n") # fmt: skip
 
   recoveryList = files.parse_comment_list(config, recovery=True)
   if recoveryList == "MainMenu":
@@ -470,16 +470,16 @@ def recover_deleted_comments(config):
 def delete_comment_list(config):
   progressDict = dict()
   progressFileFolder = os.path.join(RESOURCES_FOLDER_NAME, "Removal_List_Progress")
-  print(f"\n\n-------------------- {F.LIGHTRED_EX}Delete Using a List / Log{S.R} --------------------")
+  print(f"\n\n-------------------- {F.LIGHTRED_EX}Delete Using a List / Log{S.R} --------------------") # fmt: skip
   while True:
-    print("\nUse new comment list, or continue where you left off with another list?")
-    print(f"  1. Use {F.LIGHTCYAN_EX}New List{S.R}")
-    print(f"  2. {F.LIGHTMAGENTA_EX}Continue With{S.R} a List")
-    listChoice = input("\nSelection (1 or 2): ")
+    print("\nUse new comment list, or continue where you left off with another list?") # fmt: skip
+    print(f"  1. Use {F.LIGHTCYAN_EX}New List{S.R}") # fmt: skip
+    print(f"  2. {F.LIGHTMAGENTA_EX}Continue With{S.R} a List") # fmt: skip
+    listChoice = input("\nSelection (1 or 2): ") # fmt: skip
     if listChoice == "1" or listChoice == "2":
       break
     else:
-      print(f"\n{F.LIGHTRED_EX}Invalid selection!{S.R} Please try again.")
+      print(f"\n{F.LIGHTRED_EX}Invalid selection!{S.R} Please try again.") # fmt: skip
 
   if listChoice == "1":
     continued = False
@@ -503,21 +503,21 @@ def delete_comment_list(config):
     if len(existingSavesList) > 0:
       if len(existingSavesList) == 1:
         saveChoice = existingSavesList[0]
-        print(f"\n{F.LIGHTGREEN_EX}Using existing save: {S.R}{saveChoice}")
+        print(f"\n{F.LIGHTGREEN_EX}Using existing save: {S.R}{saveChoice}") # fmt: skip
       elif len(existingSavesList) > 1:
-        print("\nWhich save file would you like to use?")
+        print("\nWhich save file would you like to use?") # fmt: skip
         for i, save in enumerate(existingSavesList):
-          print(f"  {i+1}. {save[:-22]}")
+          print(f"  {i+1}. {save[:-22]}") # fmt: skip
         # Take and Validate Input
         while valid == False:
-          saveChoice = input(f"\nSelection (1-{len(existingSavesList)}): ")
+          saveChoice = input(f"\nSelection (1-{len(existingSavesList)}): ") # fmt: skip
           if saveChoice.isdigit() and int(saveChoice) > 0 and int(saveChoice) <= len(existingSavesList):
             saveChoice = existingSavesList[int(saveChoice)-1]
             valid = True
           elif saveChoice.lower() == "x":
             return "MainMenu"
           else:
-            print(f"\n{F.RED}Invalid Selectionp{S.R}. Please try again.")
+            print(f"\n{F.RED}Invalid Selectionp{S.R}. Please try again.") # fmt: skip
       progressFileName = saveChoice
       progressFileNameWithPath = os.path.join(progressFileFolder, progressFileName)
       progressDict = files.read_dict_pickle_file(progressFileName, progressFileFolder)
@@ -525,26 +525,26 @@ def delete_comment_list(config):
       removalList = "Loaded"
 
     else:
-      print(f"\n{F.RED}No previous saves found!{S.R}")
-      input("\nPress Enter to return to Main Menu...")
+      print(f"\n{F.RED}No previous saves found!{S.R}") # fmt: skip
+      input("\nPress Enter to return to Main Menu...") # fmt: skip
       return "MainMenu"
 
 
     while valid == False:
-      input(F"\nNext, follow the process by loading {F.YELLOW}the same comment list/log you used before{S.R}. Press Enter to continue...")
+      input(F"\nNext, follow the process by loading {F.YELLOW}the same comment list/log you used before{S.R}. Press Enter to continue...") # fmt: skip
       removalList, listFileNameBase = files.parse_comment_list(config, removal=True, returnFileName=True)
       if removalList == "MainMenu":
         return "MainMenu"
 
       # Read pickle into dictionary of deleted and non-deleted files from last time
-      print("\nChecking for saved progress file...")
+      print("\nChecking for saved progress file...") # fmt: skip
       progressFileName = listFileNameBase + "_removal_progress.save"
       progressFileNameWithPath = os.path.join(progressFileFolder, progressFileName)
       if os.path.isfile(progressFileNameWithPath):
         progressDict = files.read_dict_pickle_file(progressFileName, progressFileFolder)
         valid = True
       else:
-        print(f"\n{F.LIGHTRED_EX}Error:{S.R} No progress file found for that log file. Try again.")
+        print(f"\n{F.LIGHTRED_EX}Error:{S.R} No progress file found for that log file. Try again.") # fmt: skip
 
     # Get data from list
     lastSessionNum = int(len(progressDict))
@@ -556,7 +556,7 @@ def delete_comment_list(config):
     if removalList == "Loaded" or (len(remainingCommentsSet) + len(previousRemovedComments) + len(previousFailedComments)) == len(removalList):
       pass
     else:
-      print(f"{F.LIGHTRED_EX}Error:{S.R} The length of the comment list you loaded doesn't match the comment list you saved last time.")
+      print(f"{F.LIGHTRED_EX}Error:{S.R} The length of the comment list you loaded doesn't match the comment list you saved last time.") # fmt: skip
       if choice(f"{F.YELLOW}Continue anyway?{S.R} (Will use previous save and ignore the file you just loaded)") != True:
         return "MainMenu"
 
@@ -565,14 +565,14 @@ def delete_comment_list(config):
     prevNotRemovedNum = len(remainingCommentsSet)
     prevFailedNum = len(previousFailedComments)
 
-    print(f"\n {F.LIGHTCYAN_EX}----------------------- Loaded Saved Comment List Status -----------------------{S.R}")
-    print(f" {F.LIGHTGREEN_EX}{prevRemovedNum} removed{S.R}  |  {F.YELLOW}{prevNotRemovedNum} not removed yet{S.R}  |  {F.LIGHTRED_EX}{prevFailedNum} failed to be removed{S.R}")
-    input("\n Press Enter to continue...")
+    print(f"\n {F.LIGHTCYAN_EX}----------------------- Loaded Saved Comment List Status -----------------------{S.R}") # fmt: skip
+    print(f" {F.LIGHTGREEN_EX}{prevRemovedNum} removed{S.R}  |  {F.YELLOW}{prevNotRemovedNum} not removed yet{S.R}  |  {F.LIGHTRED_EX}{prevFailedNum} failed to be removed{S.R}") # fmt: skip
+    input("\n Press Enter to continue...") # fmt: skip
 
     # Set removal list based on previous save
     removalList = list(remainingCommentsSet)
     if len(previousFailedComments)>0:
-      print(f"{F.LIGHTRED_EX}NOTE:{S.R} During previous sessions, {F.LIGHTRED_EX}{len(previousFailedComments)} comments{S.R} failed to be deleted.")
+      print(f"{F.LIGHTRED_EX}NOTE:{S.R} During previous sessions, {F.LIGHTRED_EX}{len(previousFailedComments)} comments{S.R} failed to be deleted.") # fmt: skip
       failChoice = choice(f"\n{F.YELLOW}Add these back into the list{S.R} to try again? (Otherwise will skip them for later) ")
       if failChoice == True:
         removalList = removalList + list(previousFailedComments)
@@ -580,16 +580,16 @@ def delete_comment_list(config):
       else:
         removalList = list(remainingCommentsSet)
 
-    print(f"\n Loaded {F.YELLOW}{len(removalList)} Remaining Comments{S.R}")
+    print(f"\n Loaded {F.YELLOW}{len(removalList)} Remaining Comments{S.R}") # fmt: skip
 
   # --- Begin removal process using list ------
-  print("\nWhat do you want to do with the comments in the list?")
-  print(f"1. {F.LIGHTRED_EX}Delete{S.R} them")
-  print(f"2. {F.LIGHTMAGENTA_EX}Hide{S.R} them for review")
+  print("\nWhat do you want to do with the comments in the list?") # fmt: skip
+  print(f"1. {F.LIGHTRED_EX}Delete{S.R} them") # fmt: skip
+  print(f"2. {F.LIGHTMAGENTA_EX}Hide{S.R} them for review") # fmt: skip
 
   validInput = False
   while validInput == False:
-    userChoice = input("\nSelection (1 or 2): ")
+    userChoice = input("\nSelection (1 or 2): ") # fmt: skip
     if userChoice == "1":
       removalMode = "rejected"
       validInput = True
@@ -604,7 +604,7 @@ def delete_comment_list(config):
     elif userChoice.lower() == "x":
       return "MainMenu"
     else:
-      print(f"{F.RED}Invalid input, try again.{S.R}")
+      print(f"{F.RED}Invalid input, try again.{S.R}") # fmt: skip
   if removalMode == "rejected":
     banChoice = choice(F"Also {F.RED}ban{S.R} the commenters?")
     if str(banChoice).lower() == "x":
@@ -615,8 +615,8 @@ def delete_comment_list(config):
 
   validInput = False
   while validInput == False:
-    print(f"\n{F.YELLOW}How many comments{S.R} (out of {len(removalList)}) do you want to remove this session? (Input '0' or 'all' to do them all)")
-    countChoice = input(f"\nNumber of comments (1-{str(quotaLimit)}): ")
+    print(f"\n{F.YELLOW}How many comments{S.R} (out of {len(removalList)}) do you want to remove this session? (Input '0' or 'all' to do them all)") # fmt: skip
+    countChoice = input(f"\nNumber of comments (1-{str(quotaLimit)}): ") # fmt: skip
     if countChoice.lower() == "all" or countChoice == "0":
         countChoice = len(removalList)
     try:
@@ -624,11 +624,11 @@ def delete_comment_list(config):
         if countChoice > 0 and countChoice <= quotaLimit:
           validInput = True
         elif countChoice >= quotaLimit:
-          print(f"\n{F.LIGHTRED_EX}Error:{S.R} {countChoice} is too many comments, you'll run out of API Quota. Read Here: {F.YELLOW}TJoe.io/api-limit-info{S.R}")
+          print(f"\n{F.LIGHTRED_EX}Error:{S.R} {countChoice} is too many comments, you'll run out of API Quota. Read Here: {F.YELLOW}TJoe.io/api-limit-info{S.R}") # fmt: skip
         else:
-          print(f"Invalid input, must be 'all' or a whole number from 1 to {str(quotaLimit)}.")
+          print(f"Invalid input, must be 'all' or a whole number from 1 to {str(quotaLimit)}.") # fmt: skip
     except:
-      print(f"{F.RED}Invalid input, must be a whole number.{S.R} Try again.")
+      print(f"{F.RED}Invalid input, must be a whole number.{S.R} Try again.") # fmt: skip
 
   # Extract selected amount of comment IDs from list
   if countChoice >= len(removalList):
@@ -643,13 +643,13 @@ def delete_comment_list(config):
     selectedRemovalList = removalList
     notRemovedList = list()
 
-  input(f"\nPress {F.YELLOW}Enter{S.R} to Begin Removal...")
+  input(f"\nPress {F.YELLOW}Enter{S.R} to Begin Removal...") # fmt: skip
   failedCommentsList = operations.delete_found_comments(commentsList=selectedRemovalList, banChoice=banChoice, deletionMode=removalMode)
 
   ### Handle Results ###
   if len(failedCommentsList) > 0:
-    print(f"\n{F.LIGHTRED_EX}Warning!{S.R} {len(failedCommentsList)} comments apparently failed to be removed. They'll be saved to be tried later.")
-    input("\nPress Enter to continue...")
+    print(f"\n{F.LIGHTRED_EX}Warning!{S.R} {len(failedCommentsList)} comments apparently failed to be removed. They'll be saved to be tried later.") # fmt: skip
+    input("\nPress Enter to continue...") # fmt: skip
     failedCommentsSet = set(failedCommentsList)
   else:
     failedCommentsSet = set()
@@ -665,7 +665,7 @@ def delete_comment_list(config):
     finalRemovedSet = selectedRemovalSet
 
   if partial == True or continued == True:
-    print("\nSaving progress...")
+    print("\nSaving progress...") # fmt: skip
     # Initialize progress dictionary
     if continued == True:
       progressDict[sessionNum] = {'removed': previousRemovedComments.union(finalRemovedSet), 'notRemoved': remainingCommentsSet, 'failedCommentsList': failedCommentsList+previousFailedComments}
@@ -675,22 +675,22 @@ def delete_comment_list(config):
 
   if not progressDict or (len(progressDict[sessionNum]['notRemoved']) == 0 and len(progressDict[sessionNum]['failedCommentsList']) == 0):
     if continued == True:
-      print(f"\n{F.LIGHTGREEN_EX}Success!{S.R} All comments should be removed. {F.YELLOW}Will now remove{S.R} finished progress file. (Log file will remain)")
+      print(f"\n{F.LIGHTGREEN_EX}Success!{S.R} All comments should be removed. {F.YELLOW}Will now remove{S.R} finished progress file. (Log file will remain)") # fmt: skip
       files.try_remove_file(progressFileNameWithPath)
     else:
-      print(f"\n{F.LIGHTGREEN_EX}Success!{S.R} All comments should be removed.")
+      print(f"\n{F.LIGHTGREEN_EX}Success!{S.R} All comments should be removed.") # fmt: skip
   else:
     #progressFileName = listFileNameBase + "_removal_progress.save"
     result = files.write_dict_pickle_file(progressDict, progressFileName, progressFileFolder, forceOverwrite=True)
     if result == True:
-      print(f"Progress file saved.")
+      print(f"Progress file saved.") # fmt: skip
     removed = len(progressDict[sessionNum]['removed'])
     notRemoved = len(progressDict[sessionNum]['notRemoved'])
     failed = len(progressDict[sessionNum]['failedCommentsList'])
 
-    print(f"\n {F.LIGHTCYAN_EX}----------------------- Comment List Status -----------------------{S.R}")
-    print(f" {F.LIGHTGREEN_EX}{removed} removed{S.R}  |  {F.YELLOW}{notRemoved} not removed yet{S.R}  |  {F.LIGHTRED_EX}{failed} failed to be removed{S.R}")
-    print(f"\n You will be able to {F.YELLOW}continue later{S.R} using the {F.YELLOW}same log file{S.R}.")
+    print(f"\n {F.LIGHTCYAN_EX}----------------------- Comment List Status -----------------------{S.R}") # fmt: skip
+    print(f" {F.LIGHTGREEN_EX}{removed} removed{S.R}  |  {F.YELLOW}{notRemoved} not removed yet{S.R}  |  {F.LIGHTRED_EX}{failed} failed to be removed{S.R}") # fmt: skip
+    print(f"\n You will be able to {F.YELLOW}continue later{S.R} using the {F.YELLOW}same log file{S.R}.") # fmt: skip
 
-  input(f"\nPress {F.YELLOW}Enter{S.R} to return to Main Menu...")
+  input(f"\nPress {F.YELLOW}Enter{S.R} to return to Main Menu...") # fmt: skip
   return "MainMenu"
