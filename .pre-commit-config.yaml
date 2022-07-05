@@ -1,13 +1,39 @@
-﻿# See https://pre-commit.com for more information
+# See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.1.0
+  rev: v4.3.0
   hooks:
   - id: check-added-large-files
+  - id: check-ast
+  - id: check-case-conflict
+  - id: check-json
   - id: check-toml
   - id: check-yaml
   - id: end-of-file-fixer
     exclude: Scripts/confusablesCustom/
-  - id: trailing-whitespace
+  - id: fix-byte-order-marker
     exclude: Scripts/confusablesCustom/
+  - id: mixed-line-ending
+    exclude: Scripts/confusablesCustom/
+  - id: requirements-txt-fixer
+  - id: trailing-whitespace
+    args: [--markdown-linebreak-ext=md]
+    exclude: Scripts/confusablesCustom/
+
+- repo: https://github.com/psf/black
+  rev: 22.6.0
+  hooks:
+  - id: black
+    exclude: Scripts/confusablesCustom/
+
+- repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
+  rev: v2.4.0
+  hooks:
+  - id: pretty-format-toml
+    args: [--autofix]
+  - id: pretty-format-yaml
+    args: [--autofix]
+    exclude: .copier-answers.yml
+    # based on
+    # https://gitlab.com/smop/pre-commit-hooks/-/blob/master/.pre-commit-hooks.yaml

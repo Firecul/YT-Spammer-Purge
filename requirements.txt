@@ -1,9 +1,10 @@
+certifi>=2021.10.8
+colorama==0.4.4
 google_api_python_client==2.33.0
 google_auth_oauthlib==0.4.6
+pre-commit
 protobuf==3.19.1
-colorama==0.4.4
-rtfunicode==2.0
-certifi>=2021.10.8
-six>=1.16.0
 python-Levenshtein>=0.12.2
 regex>=2022.1.18
+rtfunicode==2.0
+six>=1.16.0
