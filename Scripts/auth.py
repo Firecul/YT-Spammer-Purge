@@ -111,7 +111,7 @@ def first_authentication():
             os.remove(TOKEN_FILE_NAME)
             YOUTUBE = get_authenticated_service()
         else:
-            print('\n')  # fmt: skip
+            print("\n")  # fmt: skip
             traceback.print_exc()  # Prints traceback
             print("----------------")  # fmt: skip
             print(f"{F.RED}[!!!] Error: {S.R}" + str(e))  # fmt: skip
