@@ -2,11 +2,11 @@
 <!---------------------------------[ Header ]---------------------------------->
 
 <h1 align = 'center'>
-    <img 
-        src = '/assets/icon.png' 
-        height = '100' 
-        width = '100' 
-        alt = 'Icon' 
+    <img
+        src = '/assets/icon.png'
+        height = '100'
+        width = '100'
+        alt = 'Icon'
     />
     <br>
     YouTube Spammer Purge
@@ -75,7 +75,7 @@ Therefore I created this script to allow you to easily scan for and purge these 
 
 ## 🤔 Pro-Tip If This Seems Sketchy: Limiting The App's Access 🤔
 
-If you feel sketched out about giving the app the required high level permissions to your channel (very understandable), you could instead use the app in 'moderator mode' (set in the config file). First, some context: When you grant access to another channel to be a moderator for your channel, they are able to mark comments for 'held for review', and this permission works through the API as well. 
+If you feel sketched out about giving the app the required high level permissions to your channel (very understandable), you could instead use the app in 'moderator mode' (set in the config file). First, some context: When you grant access to another channel to be a moderator for your channel, they are able to mark comments for 'held for review', and this permission works through the API as well.
 
 _Therefore,_ what you could do is create an _blank dummy-google-account_ with nothing on it except a empty new channel. Then you can grant _that_ channel permission to be a moderator, and use the app through _the dummy moderator account_. **This way, you know that the app will never have the ability to do more than mark comments as held for review** (which the app supports) on your main channel, and have no other access to your account's data. You just won't be able to ban the spammers through this app directly, but you can still remove/hide their comments instead of deleting them. Just make sure to create the google cloud API project on the dummy account instead.
 
@@ -106,37 +106,37 @@ Read some additional details about 'moderator mode' on the [wiki page here][Mode
 <div align = 'center'>
     <h2>Opening Menu</h2>
     <br>
-    <img 
-        width = '675' 
-        alt = 'Opening Menu' 
+    <img
+        width = '675'
+        alt = 'Opening Menu'
         src = 'https://user-images.githubusercontent.com/93459510/174273252-5b5c0d03-db79-4e17-a8b6-77cd9a329ac4.png'>
     <br>
     <h2>Filter Mode Selection</h2>
     <br>
-    <img 
-        width = '675' 
-        alt = 'Filter Mode Selection' 
+    <img
+        width = '675'
+        alt = 'Filter Mode Selection'
         src = 'https://user-images.githubusercontent.com/93459510/174273476-5af0a1ad-9ca1-4fea-976d-e731ce336922.png'>
     <br>
     <h2>Scanning<br>(Auto Smart Mode)</h2>
     <br>
-    <img 
-        width = '675' 
-        alt = 'Scanning (Auto Smart Mode)' 
+    <img
+        width = '675'
+        alt = 'Scanning (Auto Smart Mode)'
         src = 'https://user-images.githubusercontent.com/93459510/174273577-38e51d30-f313-4053-ba31-bb2724770dda.png'>
     <br>
     <h2>Matched Comments List</h2>
     <br>
-    <img 
-        width = '675' 
-        alt = 'Matched Comments List' 
+    <img
+        width = '675'
+        alt = 'Matched Comments List'
         src = 'https://user-images.githubusercontent.com/93459510/174273656-0fb22382-ec88-4e63-88f3-e4a93ac1f1ad.png'>
     <br>
     <h2>Match Samples and Deletion Menu</h2>
     <br>
-    <img 
-        width = '675' 
-        alt = 'Match Samples and Deletion Menu' 
+    <img
+        width = '675'
+        alt = 'Match Samples and Deletion Menu'
         src = 'https://user-images.githubusercontent.com/93459510/174273744-3d5a174a-904a-493e-af37-bcca44c57820.png'>
     <br>
 </div>
@@ -164,7 +164,7 @@ The easiest way to install YTSpammerPurge is using the install script.
 bash <(curl -s https://raw.githubusercontent.com/ThioJoe/YT-Spammer-Purge/main/install.sh)
 ```
 
-<img 
+<img
     width = '500'
     src = 'https://user-images.githubusercontent.com/60006481/154855672-165565a1-50db-47d4-bf39-0fb576710f63.gif'
 />
@@ -177,9 +177,9 @@ See one of the following if you need further help:
 
 To update YTSpammerPurge, run the `install.sh` file inside your installation.
 
-<img 
+<img
     width = '500'
-    src = 'https://user-images.githubusercontent.com/60006481/154855673-bf2e8fdb-eaa3-4583-a2a1-80ef4816e2bc.gif' 
+    src = 'https://user-images.githubusercontent.com/60006481/154855673-bf2e8fdb-eaa3-4583-a2a1-80ef4816e2bc.gif'
 />
 
 ##### Manual Installation
@@ -200,7 +200,7 @@ To build your own version you can run this command: `docker-compose -f docker-co
 
 
 ## Instructions - Obtaining YouTube API Key
-To use this script, you will need an "Oauth2" credential to access the scanning and deletion functions via YouTube's Data API. Otherwise this script won't work at all. 
+To use this script, you will need an "Oauth2" credential to access the scanning and deletion functions via YouTube's Data API. Otherwise this script won't work at all.
 * #### Instructions can be found on this page: [Instructions: Obtaining an API Key][API Key]
 * #### **Or, follow a video WalkThrough Here: <https://www.youtube.com/watch?v=c6ebWvay8dE>**  
 
@@ -222,5 +222,3 @@ To use this script, you will need an "Oauth2" credential to access the scanning 
 
 [Demo 1 Thumbnail]: https://user-images.githubusercontent.com/12518330/140164510-7c886cd9-b9d4-4d6d-a466-fb58dd42ab48.jpg
 [Demo 1]: https://www.youtube.com/watch?v=-vOakOgYLUI
-
-
