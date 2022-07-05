@@ -171,7 +171,7 @@ def validate_channel_id(inputted_channel):
             if response.get("items"):
                 isolatedChannelID = response.get("items")[0]["snippet"][
                     "channelId"
-                ]  # Get channel ID from custom channel URL username
+                ]  # Get channel ID from custom channel URL username 
 
   # Handle legacy style custom URL (no /c/ for custom URL)
   elif not any(x in inputted_channel for x in notChannelList) and (inputted_channel.lower().startswith("youtube.com/") or str(urlparse(inputted_channel).hostname).lower() == "youtube.com"):  # fmt: skip
