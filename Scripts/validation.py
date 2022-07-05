@@ -173,13 +173,10 @@ def validate_channel_id(inputted_channel):
                     "channelId"
                 ]  # Get channel ID from custom channel URL username
 
-    # Handle legacy style custom URL (no /c/ for custom URL)
-    elif not any(x in inputted_channel for x in notChannelList) and (
-        inputted_channel.lower().startswith("youtube.com/")
-        or str(urlparse(inputted_channel).hostname).lower() == "youtube.com"
-    ):
-        startIndex = inputted_channel.rindex("/") + 1
-        endIndex = len(inputted_channel)
+  # Handle legacy style custom URL (no /c/ for custom URL)
+  elif not any(x in inputted_channel for x in notChannelList) and (inputted_channel.lower().startswith("youtube.com/") or str(urlparse(inputted_channel).hostname).lower() == "youtube.com"):  # fmt: skip
+    startIndex = inputted_channel.rindex("/") + 1
+    endIndex = len(inputted_channel)
 
         if startIndex < endIndex and endIndex <= len(inputted_channel):
             customURL = inputted_channel[startIndex:endIndex]
