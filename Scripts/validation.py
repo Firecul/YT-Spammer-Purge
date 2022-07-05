@@ -51,7 +51,7 @@ def validate_video_id(video_url_or_id, silent=False, pass_exception=False, basic
             print(f"                    Bug Report Link: {F.YELLOW}TJoe.io/bug-report{S.R}") # fmt: skip
             input("\nPress Enter to return to the main menu...") # fmt: skip
             return "MainMenu", "MainMenu", "MainMenu", "MainMenu", "MainMenu"
-            
+
 
           return True, possibleVideoID, videoTitle, commentCount, channelID, channelTitle
 
@@ -67,7 +67,7 @@ def validate_video_id(video_url_or_id, silent=False, pass_exception=False, basic
         if silent == False:
           print(f"\n{B.RED}{F.BLACK}Invalid Video link or ID!{S.R} Video IDs are 11 characters long.") # fmt: skip
         return False, None, None, None, None
-    
+
 
 ############################### VALIDATE COMMUNITY POST ID #################################
 def validate_post_id(post_url):
@@ -96,7 +96,7 @@ def validate_post_id(post_url):
 
   else:
     return False, None, None, None, None
-  
+
 
 ##################################### VALIDATE CHANNEL ID ##################################
 # Checks if channel ID / Channel Link is correct length and in correct format - If so returns true and isolated channel ID
@@ -115,7 +115,7 @@ def validate_channel_id(inputted_channel):
   if "/channel/" in inputted_channel:
     startIndex = inputted_channel.rindex("/") + 1
     endIndex = len(inputted_channel)
-    
+
     if "?" in inputted_channel:
       endIndex = inputted_channel.rindex("?")
 
@@ -139,7 +139,7 @@ def validate_channel_id(inputted_channel):
       response = auth.YOUTUBE.search().list(part="snippet",q=customURL, maxResults=1).execute()
       if response.get("items"):
         isolatedChannelID = response.get("items")[0]["snippet"]["channelId"] # Get channel ID from custom channel URL username
-  
+
   # Handle legacy style custom URL (no /c/ for custom URL)
   elif not any(x in inputted_channel for x in notChannelList) and (inputted_channel.lower().startswith("youtube.com/") or str(urlparse(inputted_channel).hostname).lower() == "youtube.com"): # fmt: skip
     startIndex = inputted_channel.rindex("/") + 1
@@ -178,14 +178,12 @@ def validate_channel_id(inputted_channel):
     return False, None, None
 
 ############################ Validate Regex Input #############################
-# Checks if regex expression is valid, tries to add escapes if necessary
-# From: https://stackoverflow.com/a/51782559/17312053
 def validate_regex(regex_from_user: str):
-  try: 
+  try:
     re.compile(regex_from_user)
     is_valid = True
     processedExpression = regex_from_user
-  except re.error: 
+  except re.error:
     try:
       re.compile(re.escape(regex_from_user))
       is_valid = True
@@ -256,7 +254,7 @@ def validate_config_settings(config):
         print(f"\n{B.RED}{F.WHITE} ERROR! {S.R} Invalid value for config setting 'levenshtein_distance': {str(value)}") # fmt: skip
         print("It must be a number from 0 to 1!") # fmt: skip
         print_quit_and_report()
-    except:  
+    except:
       print(f"\n{B.RED}{F.WHITE} ERROR! {S.R} Invalid value for config setting 'levenshtein_distance': {str(value)}") # fmt: skip
       print("It must be a number from 0 to 1!") # fmt: skip
       print_quit_and_report()
@@ -272,7 +270,7 @@ def validate_config_settings(config):
       print(f"\n{B.RED}{F.WHITE} ERROR! {S.R} Invalid value for config setting '{settingName}': {str(path)}") # fmt: skip
       print("Make sure the folder exists!") # fmt: skip
       print_quit_and_report()
-  
+
   def validate_encoding(value, *args):
     try:
       codecs.lookup(value)
@@ -331,7 +329,7 @@ def validate_config_settings(config):
           print("A channel ID must be 24 charactres long and begin with 'UC'!") # fmt: skip
           print_quit_and_report()
       return True
-  
+
   def validate_chars(value, *args):
     if value == 'ask':
       return True
@@ -358,7 +356,7 @@ def validate_config_settings(config):
       print(f"\n{B.RED}{F.WHITE} ERROR! {S.R} Invalid value for config setting 'strings_to_filter': {str(value)}") # fmt: skip
       print("Make sure it is either a single string, or a comma separate list of them!") # fmt: skip
       print_quit_and_report()
-  
+
   def validate_regex_setting(value, *args):
     if value == 'ask':
       return True
@@ -370,8 +368,8 @@ def validate_config_settings(config):
       print("Make sure it is a valid regular expresion! Example:  [^\x00-\xFF]") # fmt: skip
       print("You can test them out on websites like regex101.com") # fmt: skip
       print_quit_and_report()
-            
-  # --------------------------------------------------------------------------------------      
+
+  # --------------------------------------------------------------------------------------
 
   validSettingsDict = {
     'use_this_config': (True, False, 'ask'),
@@ -483,7 +481,7 @@ def validate_config_settings(config):
         print(f"Consider reporting it: {F.YELLOW}TJoe.io/bug-report{S.R}") # fmt: skip
         input(f"\n It might not cause an issue, so press Enter to continue anyway...") # fmt: skip
         continue
-  
+
 
   # Checks to see if any settings are missing from the config file
   allSettingsDict = []
