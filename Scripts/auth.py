@@ -56,7 +56,7 @@ def get_authenticated_service():
             print(f"\n         ----- {F.WHITE}{B.RED}[!] Error:{S.R} client_secrets.json file not found -----")  # fmt: skip
             print(f" ----- Did you create a {F.YELLOW}Google Cloud Platform Project{S.R} to access the API? ----- ")  # fmt: skip
             print(f"  > For instructions on how to get an API key, visit: {F.YELLOW}TJoe.io/api-setup{S.R}")  # fmt: skip
-            print(f"\n  > (Non-shortened Link: https://github.com/ThioJoe/YT-Spammer-Purge/wiki/Instructions:-Obtaining-an-API-Key)")  # fmt: skip
+            print("\n  > (Non-shortened Link: https://github.com/ThioJoe/YT-Spammer-Purge/wiki/Instructions:-Obtaining-an-API-Key)")  # fmt: skip
             input("\nPress Enter to Exit...")  # fmt: skip
             sys.exit()
 
@@ -83,7 +83,7 @@ def get_authenticated_service():
             )
             print(f"{F.GREEN}[OK] Authorization Complete.{S.R}")  # fmt: skip
             # Save the credentials for the next run
-        with open(TOKEN_FILE_NAME, "w") as token:
+        with open(TOKEN_FILE_NAME, "w", encoding="utf_8") as token:
             token.write(creds.to_json())
     YOUTUBE = build(
         API_SERVICE_NAME,
@@ -164,7 +164,7 @@ def get_current_user(config):
     try:
         channelID = results["items"][0]["id"]
         IDCheck = validation.validate_channel_id(channelID)
-        if IDCheck[0] == False:
+        if IDCheck[0] is False:
             raise ChannelIDError
         try:
             channelTitle = results["items"][0]["snippet"][
@@ -188,7 +188,7 @@ def get_current_user(config):
         input("\nPress Enter to Exit...")  # fmt: skip
         sys.exit()
 
-    if config == None:
+    if config is None:
         configMatch = None  # Used only if channel ID is set in the config
     elif config["your_channel_id"] == "ask":
         configMatch = None

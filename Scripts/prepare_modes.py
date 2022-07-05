@@ -39,9 +39,9 @@ def prepare_filter_mode_chars(scanMode, filterMode, config):
 
     confirm = False
     validConfigSetting = True
-    while confirm == False:
+    while confirm is False:
         if (
-            validConfigSetting == True
+            validConfigSetting is True
             and config
             and config["characters_to_filter"] != "ask"
         ):
@@ -73,7 +73,7 @@ def prepare_filter_mode_chars(scanMode, filterMode, config):
                 sys.exit()
         print(f"     {whatToScanMsg} will be scanned for {F.MAGENTA}ANY{S.R} of the characters you entered in the previous window.")  # fmt: skip
         userChoice = choice("Begin Scanning? ", bypass)
-        if userChoice == True:
+        if userChoice is True:
             confirm = True
         elif userChoice == False:
             confirm = False
@@ -103,9 +103,9 @@ def prepare_filter_mode_strings(scanMode, filterMode, config):
 
     validEntry = False
     validConfigSetting = True
-    while validEntry == False:
+    while validEntry is False:
         if (
-            validConfigSetting == True
+            validConfigSetting is True
             and config
             and config["strings_to_filter"] != "ask"
         ):
@@ -124,14 +124,14 @@ def prepare_filter_mode_strings(scanMode, filterMode, config):
         else:
             validConfigSetting = False
 
-        if validEntry == True:
+        if validEntry is True:
             if config["strings_to_filter"] != "ask":
                 pass
             else:
                 print(f"     {whatToScanMsg} will be scanned for {F.MAGENTA}ANY{S.R} of the following strings:")  # fmt: skip
                 print(filterStringList)  # fmt: skip
             userChoice = choice("Begin scanning? ", bypass)
-            if userChoice == True:
+            if userChoice is True:
                 validEntry = True
             elif userChoice == False:
                 validEntry = False
@@ -159,8 +159,8 @@ def prepare_filter_mode_regex(scanMode, filterMode, config):
         validConfigSetting = False
     validExpression = False
 
-    while validExpression == False:
-        if validConfigSetting == True and config and config["regex_to_filter"] != "ask":
+    while validExpression is False:
+        if validConfigSetting is True and config and config["regex_to_filter"] != "ask":
             inputtedExpression = config["regex_to_filter"]
             bypass = True
         else:
@@ -174,11 +174,11 @@ def prepare_filter_mode_regex(scanMode, filterMode, config):
         )  # Returns tuple of valid, and processed expression
         validExpression = validationResults[0]
 
-        if validExpression == True:
+        if validExpression is True:
             processedExpression = validationResults[1]
             print(f"     The expression appears to be {F.GREEN}valid{S.R}!")  # fmt: skip
 
-            if validExpression == True:
+            if validExpression is True:
                 userChoice = choice("Begin scanning? ", bypass)
                 if userChoice == True:
                     pass
