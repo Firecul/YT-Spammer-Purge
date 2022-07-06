@@ -192,7 +192,7 @@ def get_current_user(config):
         configMatch = None  # Used only if channel ID is set in the config
     elif config["your_channel_id"] == "ask":
         configMatch = None
-    elif validation.validate_channel_id(config["your_channel_id"])[0] == True:
+    elif validation.validate_channel_id(config["your_channel_id"])[0] is True:
         if config["your_channel_id"] == channelID:
             configMatch = True
         else:

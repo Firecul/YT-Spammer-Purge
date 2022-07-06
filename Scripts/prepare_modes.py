@@ -75,10 +75,10 @@ def prepare_filter_mode_chars(scanMode, filterMode, config):
         userChoice = choice("Begin Scanning? ", bypass)
         if userChoice is True:
             confirm = True
-        elif userChoice == False:
+        elif userChoice is False:
             confirm = False
             validConfigSetting = False
-        elif userChoice == None:
+        elif userChoice is None:
             return "MainMenu", None
 
     return inputChars, None
@@ -133,9 +133,9 @@ def prepare_filter_mode_strings(scanMode, filterMode, config):
             userChoice = choice("Begin scanning? ", bypass)
             if userChoice is True:
                 validEntry = True
-            elif userChoice == False:
+            elif userChoice is False:
                 validEntry = False
-            elif userChoice == None:
+            elif userChoice is None:
                 return "MainMenu", None
 
     return filterStringList, None
